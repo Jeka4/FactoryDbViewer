@@ -12,8 +12,6 @@ namespace FactoryDataModel
         {
             using (var contex = new DbFactory())
             {
-                contex.Database.CreateIfNotExists();
-
                 var x = contex.Workers;
 
                 foreach (var item in x)
