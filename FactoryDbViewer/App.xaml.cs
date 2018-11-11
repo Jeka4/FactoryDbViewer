@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using FactoryDataModel;
 
 namespace FactoryDbViewer
 {
@@ -13,5 +14,9 @@ namespace FactoryDbViewer
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            DataModel model = new DataModel();
+        }
     }
 }
