@@ -54,6 +54,7 @@
             <PropertyRef Name="detailID" />
             <PropertyRef Name="date" />
             <PropertyRef Name="departmentID" />
+            
           </Key>
           <Property Name="detailID" Type="int" Nullable="false" />
           <Property Name="date" Type="date" Nullable="false" />
