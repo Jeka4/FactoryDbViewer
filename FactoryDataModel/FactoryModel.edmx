@@ -9,9 +9,12 @@
 предупреждение 6002: В таблице или представлении "D:\C#PROJECTS\FACTORYDBVIEWER\FACTORYDATAMODEL\BD_FACTORY.MDF.dbo.DailyAccountView" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="DailyAccountView">
           <Key>
+            <PropertyRef Name="workerID" />
             <PropertyRef Name="detailID" />
             <PropertyRef Name="date" />
-            <PropertyRef Name="workerID" />
+            
+            
+            
           </Key>
           <Property Name="workerID" Type="int" Nullable="false" />
           <Property Name="detailID" Type="int" Nullable="false" />
@@ -35,11 +38,27 @@
         <EntityType Name="DetailsView">
           <Key>
             <PropertyRef Name="id" />
+            
+            
+            
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="detailMass" Type="float" Nullable="false" />
           <Property Name="blankMass" Type="float" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "D:\C#PROJECTS\FACTORYDBVIEWER\FACTORYDATAMODEL\BD_FACTORY.MDF.dbo.MonthAccountView" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="MonthAccountView">
+          <Key>
+            <PropertyRef Name="detailID" />
+            <PropertyRef Name="date" />
+            <PropertyRef Name="departmentID" />
+          </Key>
+          <Property Name="detailID" Type="int" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="departmentID" Type="int" Nullable="false" />
+          <Property Name="mustProduce" Type="int" Nullable="false" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
 предупреждение 6002: В таблице или представлении "D:\C#PROJECTS\FACTORYDBVIEWER\FACTORYDATAMODEL\BD_FACTORY.MDF.dbo.WorkerInformationView" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
@@ -208,6 +227,14 @@
     [DetailsView].[blankMass] AS [blankMass]
     FROM [dbo].[DetailsView] AS [DetailsView]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="MonthAccountView" EntityType="Self.MonthAccountView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [MonthAccountView].[detailID] AS [detailID], 
+    [MonthAccountView].[date] AS [date], 
+    [MonthAccountView].[departmentID] AS [departmentID], 
+    [MonthAccountView].[mustProduce] AS [mustProduce]
+    FROM [dbo].[MonthAccountView] AS [MonthAccountView]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="WorkerInformationView" EntityType="Self.WorkerInformationView" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [WorkerInformationView].[id] AS [id], 
@@ -243,6 +270,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Workers" Relationship="FactoryDataModel.DepartmentsViewWorkerInformationView" FromRole="DepartmentsView" ToRole="WorkerInformationView" />
+          <NavigationProperty Name="MonthAccount" Relationship="FactoryDataModel.DepartmentsViewMonthAccountView" FromRole="DepartmentsView" ToRole="MonthAccountView" />
         </EntityType>
         <EntityType Name="WorkerInformationView">
           <Key>
@@ -391,6 +419,19 @@
             <End Role="WorkerInformationView" EntitySet="WorkerInformationView" />
             <End Role="DailyAccountView" EntitySet="DailyAccountView" />
           </AssociationSet>
+          <AssociationSet Name="DetailsViewDailyAccountView" Association="FactoryDataModel.DetailsViewDailyAccountView">
+            <End Role="DetailsView" EntitySet="DetailsView" />
+            <End Role="DailyAccountView" EntitySet="DailyAccountView" />
+          </AssociationSet>
+          <EntitySet Name="MonthAccountView" EntityType="FactoryDataModel.MonthAccountView" />
+          <AssociationSet Name="DepartmentsViewMonthAccountView" Association="FactoryDataModel.DepartmentsViewMonthAccountView">
+            <End Role="DepartmentsView" EntitySet="DepartmentsView" />
+            <End Role="MonthAccountView" EntitySet="MonthAccountView" />
+          </AssociationSet>
+          <AssociationSet Name="DetailsViewMonthAccountView" Association="FactoryDataModel.DetailsViewMonthAccountView">
+            <End Role="DetailsView" EntitySet="DetailsView" />
+            <End Role="MonthAccountView" EntitySet="MonthAccountView" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="InsertDailyAccount_Result">
           <Property Type="Int32" Name="workerID" Nullable="false" />
@@ -502,17 +543,18 @@
         </Association>
         <EntityType Name="DailyAccountView">
           <Key>
+            <PropertyRef Name="workerID" />
             <PropertyRef Name="detailID" />
             <PropertyRef Name="date" />
-            <PropertyRef Name="WorkerInformationId" />
           </Key>
-          <Property Name="WorkerInformationId" Type="Int32" Nullable="false" />
+          <Property Name="workerID" Type="Int32" Nullable="false" />
           <Property Name="detailID" Type="Int32" Nullable="false" />
           <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="madeCount" Type="Int32" Nullable="false" />
           <Property Name="norm" Type="Int32" Nullable="false" />
           <Property Name="defectCount" Type="Int32" Nullable="false" />
           <NavigationProperty Name="WorkerInformation" Relationship="FactoryDataModel.WorkerInformationViewDailyAccountView" FromRole="DailyAccountView" ToRole="WorkerInformationView" />
+          <NavigationProperty Name="Detail" Relationship="FactoryDataModel.DetailsViewDailyAccountView" FromRole="DailyAccountView" ToRole="DetailsView" />
         </EntityType>
         <EntityType Name="DetailsView">
           <Key>
@@ -522,6 +564,8 @@
           <Property Name="name" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="detailMass" Type="Double" Nullable="false" />
           <Property Name="blankMass" Type="Double" Nullable="false" />
+          <NavigationProperty Name="DailyAccount" Relationship="FactoryDataModel.DetailsViewDailyAccountView" FromRole="DetailsView" ToRole="DailyAccountView" />
+          <NavigationProperty Name="MonthAccount" Relationship="FactoryDataModel.DetailsViewMonthAccountView" FromRole="DetailsView" ToRole="MonthAccountView" />
         </EntityType>
         <Association Name="WorkerInformationViewDailyAccountView">
           <End Type="FactoryDataModel.WorkerInformationView" Role="WorkerInformationView" Multiplicity="1" />
@@ -531,7 +575,56 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="DailyAccountView">
-              <PropertyRef Name="WorkerInformationId" />
+              <PropertyRef Name="workerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DetailsViewDailyAccountView">
+          <End Type="FactoryDataModel.DetailsView" Role="DetailsView" Multiplicity="1" />
+          <End Type="FactoryDataModel.DailyAccountView" Role="DailyAccountView" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DetailsView">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DailyAccountView">
+              <PropertyRef Name="detailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MonthAccountView">
+          <Key>
+            <PropertyRef Name="detailID" />
+            <PropertyRef Name="date" />
+            <PropertyRef Name="departmentID" />
+          </Key>
+          <Property Name="detailID" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="departmentID" Type="Int32" Nullable="false" />
+          <Property Name="mustProduce" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Department" Relationship="FactoryDataModel.DepartmentsViewMonthAccountView" FromRole="MonthAccountView" ToRole="DepartmentsView" />
+          <NavigationProperty Name="Detail" Relationship="FactoryDataModel.DetailsViewMonthAccountView" FromRole="MonthAccountView" ToRole="DetailsView" />
+        </EntityType>
+        <Association Name="DepartmentsViewMonthAccountView">
+          <End Type="FactoryDataModel.DepartmentsView" Role="DepartmentsView" Multiplicity="1" />
+          <End Type="FactoryDataModel.MonthAccountView" Role="MonthAccountView" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmentsView">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MonthAccountView">
+              <PropertyRef Name="departmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DetailsViewMonthAccountView">
+          <End Type="FactoryDataModel.DetailsView" Role="DetailsView" Multiplicity="1" />
+          <End Type="FactoryDataModel.MonthAccountView" Role="MonthAccountView" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DetailsView">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MonthAccountView">
+              <PropertyRef Name="detailID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -781,13 +874,44 @@
           <EntitySetMapping Name="DailyAccountView">
             <EntityTypeMapping TypeName="FactoryDataModel.DailyAccountView">
               <MappingFragment StoreEntitySet="DailyAccountView">
-                <ScalarProperty Name="WorkerInformationId" ColumnName="workerID" />
                 <ScalarProperty Name="defectCount" ColumnName="defectCount" />
                 <ScalarProperty Name="norm" ColumnName="norm" />
                 <ScalarProperty Name="madeCount" ColumnName="madeCount" />
                 <ScalarProperty Name="date" ColumnName="date" />
                 <ScalarProperty Name="detailID" ColumnName="detailID" />
+                <ScalarProperty Name="workerID" ColumnName="workerID" />
               </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="FactoryDataModel.DailyAccountView">
+              <ModificationFunctionMapping>
+                <InsertFunction FunctionName="Хранилище FactoryDataModel.InsertDailyAccount">
+                  <ScalarProperty Name="workerID" ParameterName="workerID" />
+                  <ScalarProperty Name="norm" ParameterName="norm" />
+                  <ScalarProperty Name="defectCount" ParameterName="defectCount" />
+                  <ScalarProperty Name="madeCount" ParameterName="madeCount" />
+                  <ScalarProperty Name="date" ParameterName="date" />
+                  <ScalarProperty Name="detailID" ParameterName="detailID" />
+                  <ResultBinding Name="workerID" ColumnName="workerID" />
+                  <ResultBinding Name="detailID" ColumnName="detailID" />
+                  <ResultBinding Name="date" ColumnName="date" />
+                </InsertFunction>
+                <UpdateFunction FunctionName="Хранилище FactoryDataModel.UpdateDailyAccount">
+                  <ScalarProperty Name="norm" ParameterName="norm" Version="Current" />
+                  <ScalarProperty Name="defectCount" ParameterName="defectCount" Version="Current" />
+                  <ScalarProperty Name="madeCount" ParameterName="madeCount" Version="Current" />
+                  <ScalarProperty Name="date" ParameterName="date" Version="Current" />
+                  <ScalarProperty Name="detailID" ParameterName="detailID" Version="Current" />
+                  <ScalarProperty Name="workerID" ParameterName="workerID" Version="Current" />
+                  <ResultBinding Name="workerID" ColumnName="workerID" />
+                  <ResultBinding Name="detailID" ColumnName="detailID" />
+                  <ResultBinding Name="date" ColumnName="date" />
+                </UpdateFunction>
+                <DeleteFunction FunctionName="Хранилище FactoryDataModel.DeleteDailyAccount">
+                  <ScalarProperty Name="date" ParameterName="date" />
+                  <ScalarProperty Name="detailID" ParameterName="detailID" />
+                  <ScalarProperty Name="workerID" ParameterName="workerID" />
+                </DeleteFunction>
+              </ModificationFunctionMapping>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DetailsView">
@@ -798,6 +922,63 @@
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="FactoryDataModel.DetailsView">
+              <ModificationFunctionMapping>
+                <InsertFunction FunctionName="Хранилище FactoryDataModel.InsertDetail">
+                  <ScalarProperty Name="detailMass" ParameterName="detailMass" />
+                  <ScalarProperty Name="blankMass" ParameterName="blankMass" />
+                  <ScalarProperty Name="name" ParameterName="name" />
+                  <ResultBinding Name="id" ColumnName="id" />
+                </InsertFunction>
+                <UpdateFunction FunctionName="Хранилище FactoryDataModel.UpdateDetail">
+                  <ScalarProperty Name="blankMass" ParameterName="blankMass" Version="Current" />
+                  <ScalarProperty Name="detailMass" ParameterName="detailMass" Version="Current" />
+                  <ScalarProperty Name="name" ParameterName="name" Version="Current" />
+                  <ScalarProperty Name="id" ParameterName="id" Version="Current" />
+                  <ResultBinding Name="id" ColumnName="id" />
+                </UpdateFunction>
+                <DeleteFunction FunctionName="Хранилище FactoryDataModel.DeleteDetail">
+                  <ScalarProperty Name="id" ParameterName="id" />
+                </DeleteFunction>
+              </ModificationFunctionMapping>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MonthAccountView">
+            <EntityTypeMapping TypeName="FactoryDataModel.MonthAccountView">
+              <MappingFragment StoreEntitySet="MonthAccountView">
+                <ScalarProperty Name="mustProduce" ColumnName="mustProduce" />
+                <ScalarProperty Name="departmentID" ColumnName="departmentID" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="detailID" ColumnName="detailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="FactoryDataModel.MonthAccountView">
+              <ModificationFunctionMapping>
+                <InsertFunction FunctionName="Хранилище FactoryDataModel.InsertDetailsMonthPlan">
+                  <ScalarProperty Name="mustProduce" ParameterName="mustProduce" />
+                  <ScalarProperty Name="detailID" ParameterName="detailID" />
+                  <ScalarProperty Name="date" ParameterName="date" />
+                  <ScalarProperty Name="departmentID" ParameterName="departmentID" />
+                  <ResultBinding Name="departmentID" ColumnName="departmentID" />
+                  <ResultBinding Name="date" ColumnName="date" />
+                  <ResultBinding Name="detailID" ColumnName="detailID" />
+                </InsertFunction>
+                <UpdateFunction FunctionName="Хранилище FactoryDataModel.UpdateDetailsMonthPlan">
+                  <ScalarProperty Name="mustProduce" ParameterName="mustProduce" Version="Current" />
+                  <ScalarProperty Name="detailID" ParameterName="detailID" Version="Current" />
+                  <ScalarProperty Name="date" ParameterName="date" Version="Current" />
+                  <ScalarProperty Name="departmentID" ParameterName="departmentID" Version="Current" />
+                  <ResultBinding Name="departmentID" ColumnName="departmentID" />
+                  <ResultBinding Name="date" ColumnName="date" />
+                  <ResultBinding Name="detailID" ColumnName="detailID" />
+                </UpdateFunction>
+                <DeleteFunction FunctionName="Хранилище FactoryDataModel.DeleteDetailsMonthPlan">
+                  <ScalarProperty Name="detailID" ParameterName="detailID" />
+                  <ScalarProperty Name="date" ParameterName="date" />
+                  <ScalarProperty Name="departmentID" ParameterName="departmentID" />
+                </DeleteFunction>
+              </ModificationFunctionMapping>
             </EntityTypeMapping>
           </EntitySetMapping>
         </EntityContainerMapping>

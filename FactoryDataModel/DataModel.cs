@@ -9,7 +9,33 @@ namespace FactoryDataModel
         {
             using (var contex = new DbFactory())
             {
-                var xx = contex.WorkerInformationView.ToList();
+                var monthAccount = contex.MonthAccountView.Create();
+                var detail = contex.DetailsView.First();
+                var dep = contex.DepartmentsView.First();
+
+                monthAccount.Detail = detail;
+                monthAccount.Department = dep;
+                monthAccount.date = DateTime.Today;
+                monthAccount.mustProduce = 5;
+
+                contex.MonthAccountView.Add(monthAccount);
+
+/*                var account = contex.DailyAccountView.Create();
+                var worker = contex.WorkerInformationView.First();
+                var detail = contex.DetailsView.First();
+
+                account.Detail = detail;
+                account.WorkerInformation = worker;
+                account.date = DateTime.Today;
+                account.defectCount = 1;
+                account.madeCount = 2;
+                account.norm = 2;
+                account.workerID = worker.id;
+                account.detailID = detail.id;
+
+                contex.DailyAccountView.Add(account);*/
+
+/*                var xx = contex.WorkerInformationView.ToList();
 
                 var dep = contex.DepartmentsView.Create();
                 var spec = contex.WorkerSpecialitiesView.Create();
@@ -33,7 +59,7 @@ namespace FactoryDataModel
                 worker.Department = dep;
                 worker.Speciality = spec;
 
-                contex.WorkerInformationView.Add(worker);
+                contex.WorkerInformationView.Add(worker);*/
                 try
                 {
                     contex.SaveChanges();

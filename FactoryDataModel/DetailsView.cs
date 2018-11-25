@@ -14,9 +14,21 @@ namespace FactoryDataModel
     
     public partial class DetailsView
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public DetailsView()
+        {
+            this.DailyAccount = new HashSet<DailyAccountView>();
+            this.MonthAccount = new HashSet<MonthAccountView>();
+        }
+    
         public int id { get; set; }
         public string name { get; set; }
         public double detailMass { get; set; }
         public double blankMass { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DailyAccountView> DailyAccount { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MonthAccountView> MonthAccount { get; set; }
     }
 }

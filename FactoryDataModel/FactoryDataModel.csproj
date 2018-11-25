@@ -109,6 +109,9 @@
     <Compile Include="InsertWorker_Result.cs">
       <DependentUpon>FactoryModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="MonthAccountView.cs">
+      <DependentUpon>FactoryModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UpdateDailyAccount_Result.cs">
       <DependentUpon>FactoryModel.tt</DependentUpon>

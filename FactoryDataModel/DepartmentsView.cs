@@ -18,6 +18,7 @@ namespace FactoryDataModel
         public DepartmentsView()
         {
             this.Workers = new HashSet<WorkerInformationView>();
+            this.MonthAccount = new HashSet<MonthAccountView>();
         }
     
         public int ID { get; set; }
@@ -25,5 +26,7 @@ namespace FactoryDataModel
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WorkerInformationView> Workers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MonthAccountView> MonthAccount { get; set; }
     }
 }

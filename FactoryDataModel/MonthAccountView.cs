@@ -12,16 +12,14 @@ namespace FactoryDataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class DailyAccountView
+    public partial class MonthAccountView
     {
-        public int workerID { get; set; }
         public int detailID { get; set; }
         public System.DateTime date { get; set; }
-        public int madeCount { get; set; }
-        public int norm { get; set; }
-        public int defectCount { get; set; }
+        public int departmentID { get; set; }
+        public int mustProduce { get; set; }
     
-        public virtual WorkerInformationView WorkerInformation { get; set; }
+        public virtual DepartmentsView Department { get; set; }
         public virtual DetailsView Detail { get; set; }
     }
 }

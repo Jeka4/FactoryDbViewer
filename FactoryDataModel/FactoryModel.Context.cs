@@ -32,6 +32,7 @@ namespace FactoryDataModel
         public virtual DbSet<WorkerSpecialitiesView> WorkerSpecialitiesView { get; set; }
         public virtual DbSet<DailyAccountView> DailyAccountView { get; set; }
         public virtual DbSet<DetailsView> DetailsView { get; set; }
+        public virtual DbSet<MonthAccountView> MonthAccountView { get; set; }
     
         public virtual int DeleteDailyAccount(Nullable<int> workerID, Nullable<int> detailID, Nullable<System.DateTime> date)
         {

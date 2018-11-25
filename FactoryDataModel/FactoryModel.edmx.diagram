@@ -10,9 +10,13 @@
         <EntityTypeShape EntityType="FactoryDataModel.WorkerSpecialitiesView" Width="1.5" PointX="6.375" PointY="0.875" IsExpanded="true" />
         <AssociationConnector Association="FactoryDataModel.DepartmentsViewWorkerInformationView" />
         <AssociationConnector Association="FactoryDataModel.WorkerSpecialitiesViewWorkerInformationView" />
-        <EntityTypeShape EntityType="FactoryDataModel.DailyAccountView" Width="2" PointX="0.75" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="FactoryDataModel.DetailsView" Width="1.5" PointX="3.75" PointY="5" />
+        <EntityTypeShape EntityType="FactoryDataModel.DailyAccountView" Width="1.875" PointX="6.25" PointY="3.375" />
+        <EntityTypeShape EntityType="FactoryDataModel.DetailsView" Width="1.5" PointX="3.75" PointY="5.25" />
         <AssociationConnector Association="FactoryDataModel.WorkerInformationViewDailyAccountView" />
+        <AssociationConnector Association="FactoryDataModel.DetailsViewDailyAccountView" />
+        <EntityTypeShape EntityType="FactoryDataModel.MonthAccountView" Width="1.875" PointX="0.5" PointY="4.25" />
+        <AssociationConnector Association="FactoryDataModel.DepartmentsViewMonthAccountView" />
+        <AssociationConnector Association="FactoryDataModel.DetailsViewMonthAccountView" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
