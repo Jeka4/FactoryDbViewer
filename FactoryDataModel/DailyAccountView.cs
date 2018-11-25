@@ -14,14 +14,13 @@ namespace FactoryDataModel
     
     public partial class DailyAccountView
     {
-        public int workerID { get; set; }
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string detail { get; set; }
+        public int WorkerInformationId { get; set; }
+        public int detailID { get; set; }
         public System.DateTime date { get; set; }
         public int madeCount { get; set; }
-        public Nullable<int> percentMadeOfNorm { get; set; }
+        public int norm { get; set; }
         public int defectCount { get; set; }
-        public Nullable<int> percentDefectOfMade { get; set; }
+    
+        public virtual WorkerInformationView WorkerInformation { get; set; }
     }
 }

@@ -14,7 +14,16 @@ namespace FactoryDataModel
     
     public partial class DepartmentsView
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public DepartmentsView()
+        {
+            this.Workers = new HashSet<WorkerInformationView>();
+        }
+    
         public int ID { get; set; }
         public string Name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WorkerInformationView> Workers { get; set; }
     }
 }

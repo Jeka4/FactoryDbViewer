@@ -18,11 +18,13 @@ namespace FactoryDataModel
         public string middleName { get; set; }
         public string lastName { get; set; }
         public string tableNumber { get; set; }
-        public int departmentID { get; set; }
-        public int specialityID { get; set; }
+        public string department { get; set; }
+        public string speciality { get; set; }
         public int category { get; set; }
         public System.DateTime workStartDate { get; set; }
         public string address { get; set; }
         public string phone { get; set; }
+        public int specialityId { get; set; }
+        public int departmentId { get; set; }
     }
 }

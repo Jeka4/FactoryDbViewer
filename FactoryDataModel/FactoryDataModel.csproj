@@ -66,23 +66,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataModel.cs" />
-    <Compile Include="DailyAccount.cs">
-      <DependentUpon>FactoryModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="DailyAccountView.cs">
       <DependentUpon>FactoryModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Department.cs">
-      <DependentUpon>FactoryModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="DataModel.cs" />
     <Compile Include="DepartmentsView.cs">
-      <DependentUpon>FactoryModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Detail.cs">
-      <DependentUpon>FactoryModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DetailsMonthPlan.cs">
       <DependentUpon>FactoryModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DetailsView.cs">
@@ -121,13 +109,7 @@
     <Compile Include="InsertWorker_Result.cs">
       <DependentUpon>FactoryModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="MonthAccountView.cs">
-      <DependentUpon>FactoryModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="sysdiagram.cs">
-      <DependentUpon>FactoryModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="UpdateDailyAccount_Result.cs">
       <DependentUpon>FactoryModel.tt</DependentUpon>
     </Compile>
@@ -146,49 +128,19 @@
     <Compile Include="UpdateWorker_Result.cs">
       <DependentUpon>FactoryModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Worker.cs">
-      <DependentUpon>FactoryModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="WorkerInformationView.cs">
-      <DependentUpon>FactoryModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WorkersInformation.cs">
       <DependentUpon>FactoryModel.tt</DependentUpon>
     </Compile>
     <Compile Include="WorkerSpecialitiesView.cs">
       <DependentUpon>FactoryModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="WorkerSpeciality.cs">
-      <DependentUpon>FactoryModel.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BD_Factory.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="BD_Factory_log.ldf">
-      <DependentUpon>BD_Factory.mdf</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="FactoryModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FactoryModel.edmx</DependentUpon>
-      <LastGenOutput>FactoryModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="FactoryModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FactoryModel.edmx</DependentUpon>
-      <LastGenOutput>FactoryModel.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="App.Config" />
     <EntityDeploy Include="FactoryModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>FactoryModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
     <None Include="FactoryModel.edmx.diagram">
       <DependentUpon>FactoryModel.edmx</DependentUpon>
     </None>
@@ -208,6 +160,25 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BD_Factory.mdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="BD_Factory_log.ldf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <DependentUpon>BD_Factory.mdf</DependentUpon>
+    </Content>
+    <Content Include="FactoryModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FactoryModel.edmx</DependentUpon>
+      <LastGenOutput>FactoryModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="FactoryModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FactoryModel.edmx</DependentUpon>
+      <LastGenOutput>FactoryModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

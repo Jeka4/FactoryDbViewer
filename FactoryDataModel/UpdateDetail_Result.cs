@@ -15,7 +15,7 @@ namespace FactoryDataModel
     {
         public int id { get; set; }
         public string name { get; set; }
-        public double blankMass { get; set; }
         public double detailMass { get; set; }
+        public double blankMass { get; set; }
     }
 }

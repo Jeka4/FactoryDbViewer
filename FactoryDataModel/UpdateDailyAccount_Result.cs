@@ -17,7 +17,7 @@ namespace FactoryDataModel
         public int detailID { get; set; }
         public System.DateTime date { get; set; }
         public int madeCount { get; set; }
-        public int defectCount { get; set; }
         public int norm { get; set; }
+        public int defectCount { get; set; }
     }
 }
