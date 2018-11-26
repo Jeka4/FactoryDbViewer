@@ -10,12 +10,13 @@ namespace FactoryDataModel
         public DataModel()
         {
             /*
-            var dep = contex.DepartmentsView.Create();
-            var spec = contex.WorkerSpecialitiesView.Create();
-
             spec.name = "Super spec";
             dep.Name = "Top secret";
             */
+
+            var dep = GetDepartments().First();
+            var spec = GetSpecialities().First();
+
             var worker = new WorkerInformationView();
 
             worker.id = 1;
@@ -30,8 +31,8 @@ namespace FactoryDataModel
             worker.speciality = String.Empty;
             worker.department = String.Empty;
 
-            //worker.Department = dep;
-            //worker.Speciality = spec;
+            worker.Department = dep;
+            worker.Speciality = spec;
 
             InsertWorker(worker);
 
