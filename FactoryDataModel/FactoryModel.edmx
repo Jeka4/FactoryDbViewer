@@ -6,7 +6,7 @@
     <edmx:StorageModels>
     <Schema Namespace="Хранилище FactoryDataModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Ошибки, обнаруженные при создании:
-предупреждение 6002: В таблице или представлении "D:\C#PROJECTS\FACTORYDBVIEWER\FACTORYDATAMODEL\BD_FACTORY.MDF.dbo.DailyAccountView" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+предупреждение 6002: В таблице или представлении "D:\403P\FACTORYDBVIEWER\FACTORYDATAMODEL\BD_FACTORY.MDF.dbo.DailyAccountView" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="DailyAccountView">
           <Key>
             <PropertyRef Name="workerID" />
@@ -24,7 +24,7 @@
           <Property Name="defectCount" Type="int" Nullable="false" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
-предупреждение 6002: В таблице или представлении "D:\C#PROJECTS\FACTORYDBVIEWER\FACTORYDATAMODEL\BD_FACTORY.MDF.dbo.DepartmentsView" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+предупреждение 6002: В таблице или представлении "D:\403P\FACTORYDBVIEWER\FACTORYDATAMODEL\BD_FACTORY.MDF.dbo.DepartmentsView" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="DepartmentsView">
           <Key>
             <PropertyRef Name="ID" />
@@ -34,7 +34,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
-предупреждение 6002: В таблице или представлении "D:\C#PROJECTS\FACTORYDBVIEWER\FACTORYDATAMODEL\BD_FACTORY.MDF.dbo.DetailsView" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+предупреждение 6002: В таблице или представлении "D:\403P\FACTORYDBVIEWER\FACTORYDATAMODEL\BD_FACTORY.MDF.dbo.DetailsView" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="DetailsView">
           <Key>
             <PropertyRef Name="id" />
@@ -48,12 +48,13 @@
           <Property Name="blankMass" Type="float" Nullable="false" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
-предупреждение 6002: В таблице или представлении "D:\C#PROJECTS\FACTORYDBVIEWER\FACTORYDATAMODEL\BD_FACTORY.MDF.dbo.MonthAccountView" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+предупреждение 6002: В таблице или представлении "D:\403P\FACTORYDBVIEWER\FACTORYDATAMODEL\BD_FACTORY.MDF.dbo.MonthAccountView" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="MonthAccountView">
           <Key>
             <PropertyRef Name="detailID" />
             <PropertyRef Name="date" />
             <PropertyRef Name="departmentID" />
+            
             
           </Key>
           <Property Name="detailID" Type="int" Nullable="false" />
@@ -62,7 +63,7 @@
           <Property Name="mustProduce" Type="int" Nullable="false" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
-предупреждение 6002: В таблице или представлении "D:\C#PROJECTS\FACTORYDBVIEWER\FACTORYDATAMODEL\BD_FACTORY.MDF.dbo.WorkerInformationView" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+предупреждение 6002: В таблице или представлении "D:\403P\FACTORYDBVIEWER\FACTORYDATAMODEL\BD_FACTORY.MDF.dbo.WorkerInformationView" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="WorkerInformationView">
           <Key>
             <PropertyRef Name="id" />
@@ -94,7 +95,7 @@
           <Property Name="departmentId" Type="int" Nullable="false" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
-предупреждение 6002: В таблице или представлении "D:\C#PROJECTS\FACTORYDBVIEWER\FACTORYDATAMODEL\BD_FACTORY.MDF.dbo.WorkerSpecialitiesView" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+предупреждение 6002: В таблице или представлении "D:\403P\FACTORYDBVIEWER\FACTORYDATAMODEL\BD_FACTORY.MDF.dbo.WorkerSpecialitiesView" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="WorkerSpecialitiesView">
           <Key>
             <PropertyRef Name="id" />
@@ -892,9 +893,6 @@
                   <ScalarProperty Name="madeCount" ParameterName="madeCount" />
                   <ScalarProperty Name="date" ParameterName="date" />
                   <ScalarProperty Name="detailID" ParameterName="detailID" />
-                  <ResultBinding Name="workerID" ColumnName="workerID" />
-                  <ResultBinding Name="detailID" ColumnName="detailID" />
-                  <ResultBinding Name="date" ColumnName="date" />
                 </InsertFunction>
                 <UpdateFunction FunctionName="Хранилище FactoryDataModel.UpdateDailyAccount">
                   <ScalarProperty Name="norm" ParameterName="norm" Version="Current" />
@@ -903,9 +901,6 @@
                   <ScalarProperty Name="date" ParameterName="date" Version="Current" />
                   <ScalarProperty Name="detailID" ParameterName="detailID" Version="Current" />
                   <ScalarProperty Name="workerID" ParameterName="workerID" Version="Current" />
-                  <ResultBinding Name="workerID" ColumnName="workerID" />
-                  <ResultBinding Name="detailID" ColumnName="detailID" />
-                  <ResultBinding Name="date" ColumnName="date" />
                 </UpdateFunction>
                 <DeleteFunction FunctionName="Хранилище FactoryDataModel.DeleteDailyAccount">
                   <ScalarProperty Name="date" ParameterName="date" />
@@ -948,8 +943,8 @@
           <EntitySetMapping Name="MonthAccountView">
             <EntityTypeMapping TypeName="FactoryDataModel.MonthAccountView">
               <MappingFragment StoreEntitySet="MonthAccountView">
-                <ScalarProperty Name="mustProduce" ColumnName="mustProduce" />
                 <ScalarProperty Name="departmentID" ColumnName="departmentID" />
+                <ScalarProperty Name="mustProduce" ColumnName="mustProduce" />
                 <ScalarProperty Name="date" ColumnName="date" />
                 <ScalarProperty Name="detailID" ColumnName="detailID" />
               </MappingFragment>
@@ -961,18 +956,12 @@
                   <ScalarProperty Name="detailID" ParameterName="detailID" />
                   <ScalarProperty Name="date" ParameterName="date" />
                   <ScalarProperty Name="departmentID" ParameterName="departmentID" />
-                  <ResultBinding Name="departmentID" ColumnName="departmentID" />
-                  <ResultBinding Name="date" ColumnName="date" />
-                  <ResultBinding Name="detailID" ColumnName="detailID" />
                 </InsertFunction>
                 <UpdateFunction FunctionName="Хранилище FactoryDataModel.UpdateDetailsMonthPlan">
                   <ScalarProperty Name="mustProduce" ParameterName="mustProduce" Version="Current" />
                   <ScalarProperty Name="detailID" ParameterName="detailID" Version="Current" />
                   <ScalarProperty Name="date" ParameterName="date" Version="Current" />
                   <ScalarProperty Name="departmentID" ParameterName="departmentID" Version="Current" />
-                  <ResultBinding Name="departmentID" ColumnName="departmentID" />
-                  <ResultBinding Name="date" ColumnName="date" />
-                  <ResultBinding Name="detailID" ColumnName="detailID" />
                 </UpdateFunction>
                 <DeleteFunction FunctionName="Хранилище FactoryDataModel.DeleteDetailsMonthPlan">
                   <ScalarProperty Name="detailID" ParameterName="detailID" />

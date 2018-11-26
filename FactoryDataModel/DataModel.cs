@@ -9,6 +9,7 @@ namespace FactoryDataModel
         {
             using (var contex = new DbFactory())
             {
+                /*
                 var monthAccount = contex.MonthAccountView.Create();
                 var detail = contex.DetailsView.First();
                 var dep = contex.DepartmentsView.First();
@@ -19,8 +20,9 @@ namespace FactoryDataModel
                 monthAccount.mustProduce = 5;
 
                 contex.MonthAccountView.Add(monthAccount);
+                */
 
-/*                var account = contex.DailyAccountView.Create();
+                var account = contex.DailyAccountView.Create();
                 var worker = contex.WorkerInformationView.First();
                 var detail = contex.DetailsView.First();
 
@@ -30,10 +32,8 @@ namespace FactoryDataModel
                 account.defectCount = 1;
                 account.madeCount = 2;
                 account.norm = 2;
-                account.workerID = worker.id;
-                account.detailID = detail.id;
 
-                contex.DailyAccountView.Add(account);*/
+                contex.DailyAccountView.Add(account);
 
 /*                var xx = contex.WorkerInformationView.ToList();
 
