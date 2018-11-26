@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace FactoryDataModel
@@ -9,33 +11,8 @@ namespace FactoryDataModel
         {
             using (var contex = new DbFactory())
             {
-                /*
-                var monthAccount = contex.MonthAccountView.Create();
-                var detail = contex.DetailsView.First();
-                var dep = contex.DepartmentsView.First();
-
-                monthAccount.Detail = detail;
-                monthAccount.Department = dep;
-                monthAccount.date = DateTime.Today;
-                monthAccount.mustProduce = 5;
-
-                contex.MonthAccountView.Add(monthAccount);
-                */
-
-                var account = contex.DailyAccountView.Create();
-                var worker = contex.WorkerInformationView.First();
-                var detail = contex.DetailsView.First();
-
-                account.Detail = detail;
-                account.WorkerInformation = worker;
-                account.date = DateTime.Today;
-                account.defectCount = 1;
-                account.madeCount = 2;
-                account.norm = 2;
-
-                contex.DailyAccountView.Add(account);
-
-/*                var xx = contex.WorkerInformationView.ToList();
+             
+/*              var xx = contex.WorkerInformationView.ToList();
 
                 var dep = contex.DepartmentsView.Create();
                 var spec = contex.WorkerSpecialitiesView.Create();
@@ -70,408 +47,408 @@ namespace FactoryDataModel
                 }
             }
         }
+       
+        public List<DetailsView> GetDetails()
+        {
+            using (var contex = new DbFactory())
+            {
+                return contex.DetailsView.ToList();
+            }
+        }
+
+        public List<WorkerSpecialitiesView> GetSpecialities()
+        {
+            using (var contex = new DbFactory())
+            {
+                return contex.WorkerSpecialitiesView.ToList();
+            }
+        }
+
+        public List<DepartmentsView> GetDepartments()
+        {
+            using (var contex = new DbFactory())
+            {
+                return contex.DepartmentsView.ToList();
+            }
+        }
+
+        public List<WorkerInformationView> GetWorkers()
+        {
+            using (var contex = new DbFactory())
+            {
+                return contex.WorkerInformationView.ToList();
+            }
+        }
+
+        public List<DailyAccountView> GetDailyAccount()
+        {
+            using (var contex = new DbFactory())
+            {
+                return contex.DailyAccountView.ToList();
+            }
+        }
+
+        public List<MonthAccountView> GetMonthAccount()
+        {
+            using (var contex = new DbFactory())
+            {
+                return contex.MonthAccountView.ToList();
+            }
+        }
         /*
-        public DbSet<DetailsView> GetDetails()
-        {
-            using (var contex = new DbFactory())
-            {
-                return contex.DetailsViews;
-            }
-        }
-
-        public DbSet<WorkerSpecialitiesView> GetSpecialities()
-        {
-            using (var contex = new DbFactory())
-            {
-                return contex.WorkerSpecialitiesViews;
-            }
-        }
-
-        public DbSet<DepartmentsView> GetDepartments()
-        {
-            using (var contex = new DbFactory())
-            {
-                return contex.DepartmentsViews;
-            }
-        }
-
-        public DbSet<WorkerInformationView> GetWorkers()
-        {
-            using (var contex = new DbFactory())
-            {
-                return contex.WorkerInformationViews;
-            }
-        }
-
-        public DbSet<DailyAccountView> GetDailyAccount()
-        {
-            using (var contex = new DbFactory())
-            {
-                return contex.DailyAccountViews;
-            }
-        }
-
-        public DbSet<MonthAccountView> GetMonthAccount()
-        {
-            using (var contex = new DbFactory())
-            {
-                return contex.MonthAccountViews;
-            }
-        }
-
-        public InsertDetail_Result InsertDetail(string name, double blankMass, double detailMass)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException(nameof(name));
-
-            if (blankMass <= 0)
-                throw new ArgumentException(string.Format("{0} should be positive", nameof(blankMass)));
-
-            if (detailMass <= 0)
-                throw new ArgumentOutOfRangeException(string.Format("{0} should be positive", nameof(detailMass)));
-
-            using (var contex = new DbFactory())
-            {
-                var result = contex.InsertDetail(name, blankMass, detailMass);
-
-                contex.SaveChanges();
-                return result.Single();
-            }
-        }
-
-        public InsertSpeciality_Result InsertSpeciality(string speciality)
-        {
-            if (string.IsNullOrWhiteSpace(speciality))
-                throw new ArgumentException(nameof(speciality));
-
-            using (var contex = new DbFactory())
-            {
-                var result = contex.InsertSpeciality(speciality);
-
-                contex.SaveChanges();
-                return result.Single();
-            }
-        }
-
-        public InsertDepartment_Result InsertDepartment(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException(nameof(name));
-
-            using (var contex = new DbFactory())
-            {
-                var result = contex.InsertDepartment(name);
-
-                contex.SaveChanges();
-                return result.Single();
-            }
-        }
-
-        public InsertDailyAccount_Result InsertDailyAccount(int workerID, int detailID, DateTime date, int madeCount, int defectCount, int norm)
-        {
-            if (workerID < 0)
-                throw new ArgumentOutOfRangeException(nameof(workerID));
-
-            if (detailID < 0)
-                throw new ArgumentOutOfRangeException(nameof(detailID));
+       public InsertDetail_Result InsertDetail(string name, double blankMass, double detailMass)
+       {
+           if (string.IsNullOrWhiteSpace(name))
+               throw new ArgumentException(nameof(name));
+
+           if (blankMass <= 0)
+               throw new ArgumentException(string.Format("{0} should be positive", nameof(blankMass)));
+
+           if (detailMass <= 0)
+               throw new ArgumentOutOfRangeException(string.Format("{0} should be positive", nameof(detailMass)));
+
+           using (var contex = new DbFactory())
+           {
+               var result = contex.InsertDetail(name, blankMass, detailMass);
 
-            if (madeCount < 0)
-                throw new ArgumentOutOfRangeException(nameof(madeCount));
+               contex.SaveChanges();
+               return result.Single();
+           }
+       }
 
-            if (defectCount < 0)
-                throw new ArgumentOutOfRangeException(nameof(defectCount));
+       public InsertSpeciality_Result InsertSpeciality(string speciality)
+       {
+           if (string.IsNullOrWhiteSpace(speciality))
+               throw new ArgumentException(nameof(speciality));
 
-            if (norm < 0)
-                throw new ArgumentOutOfRangeException(nameof(norm));
+           using (var contex = new DbFactory())
+           {
+               var result = contex.InsertSpeciality(speciality);
 
-            using (var contex = new DbFactory())
-            {
-                var result = contex.InsertDailyAccount(workerID, detailID, date, madeCount, defectCount, norm);
+               contex.SaveChanges();
+               return result.Single();
+           }
+       }
+
+       public InsertDepartment_Result InsertDepartment(string name)
+       {
+           if (string.IsNullOrWhiteSpace(name))
+               throw new ArgumentException(nameof(name));
 
-                contex.SaveChanges();
-                return result.Single();
-            }
-        }
+           using (var contex = new DbFactory())
+           {
+               var result = contex.InsertDepartment(name);
 
-        public InsertDetailsMonthPlan_Result InsertDetailsMonthPlan(int departmentID, DateTime date, int detailID, int mustProduce)
-        {
-            if (departmentID < 0)
-                throw new ArgumentOutOfRangeException(nameof(departmentID));
+               contex.SaveChanges();
+               return result.Single();
+           }
+       }
 
-            if (detailID < 0)
-                throw new ArgumentOutOfRangeException(nameof(detailID));
+       public InsertDailyAccount_Result InsertDailyAccount(int workerID, int detailID, DateTime date, int madeCount, int defectCount, int norm)
+       {
+           if (workerID < 0)
+               throw new ArgumentOutOfRangeException(nameof(workerID));
 
-            if (mustProduce < 0)
-                throw new ArgumentOutOfRangeException(nameof(mustProduce));
+           if (detailID < 0)
+               throw new ArgumentOutOfRangeException(nameof(detailID));
 
-            using (var contex = new DbFactory())
-            {
-                var result = contex.InsertDetailsMonthPlan(departmentID, date, detailID, mustProduce);
+           if (madeCount < 0)
+               throw new ArgumentOutOfRangeException(nameof(madeCount));
 
-                contex.SaveChanges();
-                return result.Single();
-            }
-        }
+           if (defectCount < 0)
+               throw new ArgumentOutOfRangeException(nameof(defectCount));
 
-        public InsertWorker_Result InsertWorker(string firstName, string middleName, string lastName, string tableNumber, int departmentID, int specialityID, int category, DateTime workStartDate, string address, string phone)
-        {
-            if (string.IsNullOrWhiteSpace(firstName))
-                throw new ArgumentException(nameof(firstName));
+           if (norm < 0)
+               throw new ArgumentOutOfRangeException(nameof(norm));
 
-            if (string.IsNullOrWhiteSpace(lastName))
-                throw new ArgumentException(nameof(lastName));
+           using (var contex = new DbFactory())
+           {
+               var result = contex.InsertDailyAccount(workerID, detailID, date, madeCount, defectCount, norm);
 
-            if (string.IsNullOrWhiteSpace(middleName))
-                throw new ArgumentException(nameof(middleName));
+               contex.SaveChanges();
+               return result.Single();
+           }
+       }
+
+       public InsertDetailsMonthPlan_Result InsertDetailsMonthPlan(int departmentID, DateTime date, int detailID, int mustProduce)
+       {
+           if (departmentID < 0)
+               throw new ArgumentOutOfRangeException(nameof(departmentID));
 
-            if (departmentID < 0)
-                throw new ArgumentOutOfRangeException(nameof(departmentID));
+           if (detailID < 0)
+               throw new ArgumentOutOfRangeException(nameof(detailID));
 
-            if (specialityID < 0)
-                throw new ArgumentOutOfRangeException(nameof(specialityID));
+           if (mustProduce < 0)
+               throw new ArgumentOutOfRangeException(nameof(mustProduce));
 
-            if (category < 0)
-                throw new ArgumentOutOfRangeException(nameof(category));
+           using (var contex = new DbFactory())
+           {
+               var result = contex.InsertDetailsMonthPlan(departmentID, date, detailID, mustProduce);
 
-            if (string.IsNullOrWhiteSpace(address))
-                throw new ArgumentException(nameof(address));
+               contex.SaveChanges();
+               return result.Single();
+           }
+       }
+
+       public InsertWorker_Result InsertWorker(string firstName, string middleName, string lastName, string tableNumber, int departmentID, int specialityID, int category, DateTime workStartDate, string address, string phone)
+       {
+           if (string.IsNullOrWhiteSpace(firstName))
+               throw new ArgumentException(nameof(firstName));
 
-            if (string.IsNullOrWhiteSpace(phone))
-                throw new ArgumentException(nameof(phone));
+           if (string.IsNullOrWhiteSpace(lastName))
+               throw new ArgumentException(nameof(lastName));
 
-            using (var contex = new DbFactory())
-            {
-                var result = contex.InsertWorker(firstName, middleName, lastName, tableNumber, departmentID, specialityID, category, workStartDate, address, phone);
+           if (string.IsNullOrWhiteSpace(middleName))
+               throw new ArgumentException(nameof(middleName));
 
-                contex.SaveChanges();
-                return result.Single();
-            }
-        }
+           if (departmentID < 0)
+               throw new ArgumentOutOfRangeException(nameof(departmentID));
 
-        public UpdateDetail_Result UpdateDetail(int id, string name, double blankMass, double detailMass)
-        {
-            if (id < 0)
-                throw new ArgumentOutOfRangeException(nameof(id));
+           if (specialityID < 0)
+               throw new ArgumentOutOfRangeException(nameof(specialityID));
 
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException(nameof(name));
+           if (category < 0)
+               throw new ArgumentOutOfRangeException(nameof(category));
 
-            if (blankMass <= 0)
-                throw new ArgumentException(string.Format("{0} should be positive", nameof(blankMass)));
+           if (string.IsNullOrWhiteSpace(address))
+               throw new ArgumentException(nameof(address));
 
-            if (detailMass <= 0)
-                throw new ArgumentOutOfRangeException(string.Format("{0} should be positive", nameof(detailMass)));
+           if (string.IsNullOrWhiteSpace(phone))
+               throw new ArgumentException(nameof(phone));
 
-            using (var contex = new DbFactory())
-            {
-                var result = contex.UpdateDetail(id, name, blankMass, detailMass);
+           using (var contex = new DbFactory())
+           {
+               var result = contex.InsertWorker(firstName, middleName, lastName, tableNumber, departmentID, specialityID, category, workStartDate, address, phone);
 
-                contex.SaveChanges();
-                return result.Single();
-            }
-        }
+               contex.SaveChanges();
+               return result.Single();
+           }
+       }
 
-        public UpdateSpeciality_Result UpdateSpeciality(int id, string speciality)
-        {
-            if (id < 0)
-                throw new ArgumentOutOfRangeException(nameof(id));
+       public UpdateDetail_Result UpdateDetail(int id, string name, double blankMass, double detailMass)
+       {
+           if (id < 0)
+               throw new ArgumentOutOfRangeException(nameof(id));
 
-            if (string.IsNullOrWhiteSpace(speciality))
-                throw new ArgumentException(nameof(speciality));
+           if (string.IsNullOrWhiteSpace(name))
+               throw new ArgumentException(nameof(name));
 
-            using (var contex = new DbFactory())
-            {
-                var result = contex.UpdateSpeciality(id, speciality);
+           if (blankMass <= 0)
+               throw new ArgumentException(string.Format("{0} should be positive", nameof(blankMass)));
 
-                contex.SaveChanges();
-                return result.Single();
-            }
-        }
+           if (detailMass <= 0)
+               throw new ArgumentOutOfRangeException(string.Format("{0} should be positive", nameof(detailMass)));
 
-        public UpdateDepartment_Result UpdateDepartment(int id, string name)
-        {
-            if (id < 0)
-                throw new ArgumentOutOfRangeException(nameof(id));
+           using (var contex = new DbFactory())
+           {
+               var result = contex.UpdateDetail(id, name, blankMass, detailMass);
 
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException(nameof(name));
+               contex.SaveChanges();
+               return result.Single();
+           }
+       }
 
-            using (var contex = new DbFactory())
-            {
-                var result = contex.UpdateDepartment(id, name);
+       public UpdateSpeciality_Result UpdateSpeciality(int id, string speciality)
+       {
+           if (id < 0)
+               throw new ArgumentOutOfRangeException(nameof(id));
 
-                contex.SaveChanges();
-                return result.Single();
-            }
-        }
+           if (string.IsNullOrWhiteSpace(speciality))
+               throw new ArgumentException(nameof(speciality));
 
-        public UpdateDailyAccount_Result UpdateDailyAccount(int workerID, int detailID, DateTime date, int madeCount, int defectCount, int norm)
-        {
-            if (workerID < 0)
-                throw new ArgumentOutOfRangeException(nameof(workerID));
+           using (var contex = new DbFactory())
+           {
+               var result = contex.UpdateSpeciality(id, speciality);
 
-            if (detailID < 0)
-                throw new ArgumentOutOfRangeException(nameof(detailID));
+               contex.SaveChanges();
+               return result.Single();
+           }
+       }
 
-            if (madeCount < 0)
-                throw new ArgumentOutOfRangeException(nameof(madeCount));
+       public UpdateDepartment_Result UpdateDepartment(int id, string name)
+       {
+           if (id < 0)
+               throw new ArgumentOutOfRangeException(nameof(id));
 
-            if (defectCount < 0)
-                throw new ArgumentOutOfRangeException(nameof(defectCount));
+           if (string.IsNullOrWhiteSpace(name))
+               throw new ArgumentException(nameof(name));
 
-            if (norm < 0)
-                throw new ArgumentOutOfRangeException(nameof(norm));
+           using (var contex = new DbFactory())
+           {
+               var result = contex.UpdateDepartment(id, name);
 
-            using (var contex = new DbFactory())
-            {
-                var result = contex.UpdateDailyAccount(workerID, detailID, date, madeCount, defectCount, norm);
+               contex.SaveChanges();
+               return result.Single();
+           }
+       }
 
-                contex.SaveChanges();
-                return result.Single();
-            }
-        }
+       public UpdateDailyAccount_Result UpdateDailyAccount(int workerID, int detailID, DateTime date, int madeCount, int defectCount, int norm)
+       {
+           if (workerID < 0)
+               throw new ArgumentOutOfRangeException(nameof(workerID));
 
-        public UpdateDetailsMonthPlan_Result UpdateDetailsMonthPlan(int departmentID, DateTime date, int detailID, int mustProduce)
-        {
-            if (departmentID < 0)
-                throw new ArgumentOutOfRangeException(nameof(departmentID));
+           if (detailID < 0)
+               throw new ArgumentOutOfRangeException(nameof(detailID));
 
-            if (detailID < 0)
-                throw new ArgumentOutOfRangeException(nameof(detailID));
+           if (madeCount < 0)
+               throw new ArgumentOutOfRangeException(nameof(madeCount));
 
-            if (mustProduce < 0)
-                throw new ArgumentOutOfRangeException(nameof(mustProduce));
+           if (defectCount < 0)
+               throw new ArgumentOutOfRangeException(nameof(defectCount));
 
-            using (var contex = new DbFactory())
-            {
-                var result = contex.UpdateDetailsMonthPlan(departmentID, date, detailID, mustProduce);
+           if (norm < 0)
+               throw new ArgumentOutOfRangeException(nameof(norm));
 
-                contex.SaveChanges();
-                return result.Single();
-            }
-        }
+           using (var contex = new DbFactory())
+           {
+               var result = contex.UpdateDailyAccount(workerID, detailID, date, madeCount, defectCount, norm);
 
-        public UpdateWorker_Result UpdateWorker(int id, string firstName, string middleName, string lastName, string tableNumber, int departmentID, int specialityID, int category, DateTime workStartDate, string address, string phone)
-        {
-            if (id < 0)
-                throw new ArgumentOutOfRangeException(nameof(id));
+               contex.SaveChanges();
+               return result.Single();
+           }
+       }
 
-            if (string.IsNullOrWhiteSpace(firstName))
-                throw new ArgumentException(nameof(firstName));
+       public UpdateDetailsMonthPlan_Result UpdateDetailsMonthPlan(int departmentID, DateTime date, int detailID, int mustProduce)
+       {
+           if (departmentID < 0)
+               throw new ArgumentOutOfRangeException(nameof(departmentID));
 
-            if (string.IsNullOrWhiteSpace(lastName))
-                throw new ArgumentException(nameof(lastName));
+           if (detailID < 0)
+               throw new ArgumentOutOfRangeException(nameof(detailID));
 
-            if (string.IsNullOrWhiteSpace(middleName))
-                throw new ArgumentException(nameof(middleName));
+           if (mustProduce < 0)
+               throw new ArgumentOutOfRangeException(nameof(mustProduce));
 
-            if (departmentID < 0)
-                throw new ArgumentOutOfRangeException(nameof(departmentID));
+           using (var contex = new DbFactory())
+           {
+               var result = contex.UpdateDetailsMonthPlan(departmentID, date, detailID, mustProduce);
 
-            if (specialityID < 0)
-                throw new ArgumentOutOfRangeException(nameof(specialityID));
+               contex.SaveChanges();
+               return result.Single();
+           }
+       }
 
-            if (category < 0)
-                throw new ArgumentOutOfRangeException(nameof(category));
+       public UpdateWorker_Result UpdateWorker(int id, string firstName, string middleName, string lastName, string tableNumber, int departmentID, int specialityID, int category, DateTime workStartDate, string address, string phone)
+       {
+           if (id < 0)
+               throw new ArgumentOutOfRangeException(nameof(id));
 
-            if (string.IsNullOrWhiteSpace(address))
-                throw new ArgumentException(nameof(address));
+           if (string.IsNullOrWhiteSpace(firstName))
+               throw new ArgumentException(nameof(firstName));
 
-            if (string.IsNullOrWhiteSpace(phone))
-                throw new ArgumentException(nameof(phone));
+           if (string.IsNullOrWhiteSpace(lastName))
+               throw new ArgumentException(nameof(lastName));
 
-            using (var contex = new DbFactory())
-            {
-                var result = contex.UpdateWorker(id, firstName, middleName, lastName, tableNumber, departmentID, specialityID, category, workStartDate, address, phone);
+           if (string.IsNullOrWhiteSpace(middleName))
+               throw new ArgumentException(nameof(middleName));
 
-                contex.SaveChanges();
-                return result.Single();
-            }
-        }
+           if (departmentID < 0)
+               throw new ArgumentOutOfRangeException(nameof(departmentID));
 
-        public bool DeleteDailyAccount(int workedID, int detailID, DateTime date)
-        {
-            if (workedID < 0)
-                throw new ArgumentOutOfRangeException(nameof(workedID));
+           if (specialityID < 0)
+               throw new ArgumentOutOfRangeException(nameof(specialityID));
 
-            if (detailID < 0)
-                throw new ArgumentOutOfRangeException(nameof(detailID));
+           if (category < 0)
+               throw new ArgumentOutOfRangeException(nameof(category));
 
-            using (var contex = new DbFactory())
-            {
-                var result = contex.DeleteDailyAccount(workedID, detailID, date);
+           if (string.IsNullOrWhiteSpace(address))
+               throw new ArgumentException(nameof(address));
 
-                return result != 0;
-            }
-        }
+           if (string.IsNullOrWhiteSpace(phone))
+               throw new ArgumentException(nameof(phone));
 
-        public bool DeleteDepartment(int id)
-        {
-            if (id < 0)
-                throw new ArgumentOutOfRangeException(nameof(id));
+           using (var contex = new DbFactory())
+           {
+               var result = contex.UpdateWorker(id, firstName, middleName, lastName, tableNumber, departmentID, specialityID, category, workStartDate, address, phone);
 
-            using (var contex = new DbFactory())
-            {
-                var result = contex.DeleteDepartment(id);
+               contex.SaveChanges();
+               return result.Single();
+           }
+       }
 
-                return result != 0;
-            }
-        }
+       public bool DeleteDailyAccount(int workedID, int detailID, DateTime date)
+       {
+           if (workedID < 0)
+               throw new ArgumentOutOfRangeException(nameof(workedID));
 
-        public bool DeleteDetail(int id)
-        {
-            if (id < 0)
-                throw new ArgumentOutOfRangeException(nameof(id));
+           if (detailID < 0)
+               throw new ArgumentOutOfRangeException(nameof(detailID));
 
-            using (var contex = new DbFactory())
-            {
-                var result = contex.DeleteDetail(id);
+           using (var contex = new DbFactory())
+           {
+               var result = contex.DeleteDailyAccount(workedID, detailID, date);
 
-                return result != 0;
-            }
-        }
+               return result != 0;
+           }
+       }
 
-        public bool DeleteDetailsMonthPlan(int departmentID, DateTime date, int detailID)
-        {
-            if (departmentID < 0)
-                throw new ArgumentOutOfRangeException(nameof(departmentID));
+       public bool DeleteDepartment(int id)
+       {
+           if (id < 0)
+               throw new ArgumentOutOfRangeException(nameof(id));
 
-            if (detailID < 0)
-                throw new ArgumentOutOfRangeException(nameof(detailID));
+           using (var contex = new DbFactory())
+           {
+               var result = contex.DeleteDepartment(id);
 
-            using (var contex = new DbFactory())
-            {
-                var result = contex.DeleteDetailsMonthPlan(departmentID, date, detailID);
+               return result != 0;
+           }
+       }
 
-                return result != 0;
-            }
-        }
+       public bool DeleteDetail(int id)
+       {
+           if (id < 0)
+               throw new ArgumentOutOfRangeException(nameof(id));
 
-        public bool DeleteSpeciality(int id)
-        {
-            if (id < 0)
-                throw new ArgumentOutOfRangeException(nameof(id));
+           using (var contex = new DbFactory())
+           {
+               var result = contex.DeleteDetail(id);
 
-            using (var contex = new DbFactory())
-            {
-                var result = contex.DeleteSpeciality(id);
+               return result != 0;
+           }
+       }
 
-                return result != 0;
-            }
-        }
+       public bool DeleteDetailsMonthPlan(int departmentID, DateTime date, int detailID)
+       {
+           if (departmentID < 0)
+               throw new ArgumentOutOfRangeException(nameof(departmentID));
 
-        public bool DeleteWorker(int id)
-        {
-            if (id < 0)
-                throw new ArgumentOutOfRangeException(nameof(id));
+           if (detailID < 0)
+               throw new ArgumentOutOfRangeException(nameof(detailID));
 
-            using (var contex = new DbFactory())
-            {
-                var result = contex.DeleteWorker(id);
+           using (var contex = new DbFactory())
+           {
+               var result = contex.DeleteDetailsMonthPlan(departmentID, date, detailID);
 
-                return result != 0;
-            }
-        }
-        */
+               return result != 0;
+           }
+       }
+
+       public bool DeleteSpeciality(int id)
+       {
+           if (id < 0)
+               throw new ArgumentOutOfRangeException(nameof(id));
+
+           using (var contex = new DbFactory())
+           {
+               var result = contex.DeleteSpeciality(id);
+
+               return result != 0;
+           }
+       }
+
+       public bool DeleteWorker(int id)
+       {
+           if (id < 0)
+               throw new ArgumentOutOfRangeException(nameof(id));
+
+           using (var contex = new DbFactory())
+           {
+               var result = contex.DeleteWorker(id);
+
+               return result != 0;
+           }
+       }
+       */
     }
 }
