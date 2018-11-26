@@ -925,14 +925,12 @@
                   <ScalarProperty Name="detailMass" ParameterName="detailMass" />
                   <ScalarProperty Name="blankMass" ParameterName="blankMass" />
                   <ScalarProperty Name="name" ParameterName="name" />
-                  <ResultBinding Name="id" ColumnName="id" />
                 </InsertFunction>
                 <UpdateFunction FunctionName="Хранилище FactoryDataModel.UpdateDetail">
                   <ScalarProperty Name="blankMass" ParameterName="blankMass" Version="Current" />
                   <ScalarProperty Name="detailMass" ParameterName="detailMass" Version="Current" />
                   <ScalarProperty Name="name" ParameterName="name" Version="Current" />
                   <ScalarProperty Name="id" ParameterName="id" Version="Current" />
-                  <ResultBinding Name="id" ColumnName="id" />
                 </UpdateFunction>
                 <DeleteFunction FunctionName="Хранилище FactoryDataModel.DeleteDetail">
                   <ScalarProperty Name="id" ParameterName="id" />
