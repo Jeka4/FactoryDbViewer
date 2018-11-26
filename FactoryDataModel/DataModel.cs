@@ -14,7 +14,7 @@ namespace FactoryDataModel
             dep.Name = "Top secret";
             */
 
-            var dep = GetDepartments().First();
+/*            var dep = GetDepartments().First();
             var spec = GetSpecialities().First();
 
             var worker = new WorkerInformationView();
@@ -35,6 +35,11 @@ namespace FactoryDataModel
             worker.Speciality = spec;
 
             InsertWorker(worker);
+            */
+
+            var d = GetDetails().Find(p => p.id == 2);
+            d.name = "AZAZA2";
+            UpdateDetail(d);
 
         }
 
@@ -146,16 +151,13 @@ namespace FactoryDataModel
             }
         }
 
-        public void UpdateDetail(DetailsView detail) //??????????????
+        public void UpdateDetail(DetailsView detail)
         {
             using (var contex = new DbFactory())
             {
                 contex.DetailsView.Attach(detail);
-
-                /*
-                var result = contex.DetailsView.Add(detail);
                 contex.Entry<DetailsView>(detail).State = EntityState.Modified;
-                */
+
                 contex.SaveChanges();
             }
         }
@@ -164,7 +166,8 @@ namespace FactoryDataModel
         {
             using (var contex = new DbFactory())
             {
-                var result = contex.WorkerSpecialitiesView.Add(speciality);
+                contex.WorkerSpecialitiesView.Attach(speciality);
+                contex.Entry<WorkerSpecialitiesView>(speciality).State = EntityState.Modified;
 
                 contex.SaveChanges();
             }
@@ -174,7 +177,8 @@ namespace FactoryDataModel
         {
             using (var contex = new DbFactory())
             {
-                var result = contex.DepartmentsView.Add(department);
+                contex.DepartmentsView.Attach(department);
+                contex.Entry<DepartmentsView>(department).State = EntityState.Modified;
 
                 contex.SaveChanges();
             }
@@ -184,7 +188,8 @@ namespace FactoryDataModel
         {
             using (var contex = new DbFactory())
             {
-                var result = contex.DailyAccountView.Add(dailyAccount);
+                contex.DailyAccountView.Attach(dailyAccount);
+                contex.Entry<DailyAccountView>(dailyAccount).State = EntityState.Modified;
 
                 contex.SaveChanges();
             }
@@ -194,7 +199,8 @@ namespace FactoryDataModel
         {
             using (var contex = new DbFactory())
             {
-                var result = contex.MonthAccountView.Add(monthAccount);
+                contex.MonthAccountView.Attach(monthAccount);
+                contex.Entry<MonthAccountView>(monthAccount).State = EntityState.Modified;
 
                 contex.SaveChanges();
             }
@@ -204,7 +210,8 @@ namespace FactoryDataModel
         {
             using (var contex = new DbFactory())
             {
-                var result = contex.WorkerInformationView.Add(worker);
+                contex.WorkerInformationView.Attach(worker);
+                contex.Entry<WorkerInformationView>(worker).State = EntityState.Modified;
 
                 contex.SaveChanges();
             }
