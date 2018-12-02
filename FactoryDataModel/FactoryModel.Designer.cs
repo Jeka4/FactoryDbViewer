@@ -1,4 +1,4 @@
-﻿// Создание кода T4 для модели "D:\403p\FactoryDbViewer\FactoryDataModel\FactoryModel.edmx" включено. 
+﻿// Создание кода T4 для модели "D:\C#Projects\FactoryDbViewer\FactoryDataModel\FactoryModel.edmx" включено. 
 // Чтобы включить формирование кода прежних версий, измените значение свойства "Стратегия создания кода" конструктора
 // на "Legacy ObjectContext". Это свойство доступно в окне "Свойства", если модель
 // открыта в конструкторе.

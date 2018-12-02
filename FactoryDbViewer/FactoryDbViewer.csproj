@@ -64,6 +64,37 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Components\GetTableEventArgs.cs" />
+    <Compile Include="Components\TableTypes.cs" />
+    <Compile Include="EditDepartmentWindow.xaml.cs">
+      <DependentUpon>EditDepartmentWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditSpecialityWindow.xaml.cs">
+      <DependentUpon>EditSpecialityWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditWorkerWindow.xaml.cs">
+      <DependentUpon>EditWorkerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="IMainWindow.cs" />
+    <Compile Include="IPresenter.cs" />
+    <Compile Include="Tables\DailyAccount.cs" />
+    <Compile Include="Tables\Department.cs" />
+    <Compile Include="Tables\Detail.cs" />
+    <Compile Include="Tables\MonthAccount.cs" />
+    <Compile Include="Tables\Speciality.cs" />
+    <Compile Include="Tables\Worker.cs" />
+    <Page Include="EditDepartmentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditSpecialityWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditWorkerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -78,6 +109,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Presenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
