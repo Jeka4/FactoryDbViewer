@@ -70,6 +70,9 @@
       <DependentUpon>FactoryModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel.cs" />
+    <Compile Include="DetailsMetaData.cs" />
+    <Compile Include="WorkersMetaData.cs" />
+    <Compile Include="SpecialitiesMetaData.cs" />
     <Compile Include="DepartmentsView.cs">
       <DependentUpon>FactoryModel.tt</DependentUpon>
     </Compile>
@@ -109,6 +112,7 @@
     <Compile Include="InsertWorker_Result.cs">
       <DependentUpon>FactoryModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DepartmentsMetaData.cs" />
     <Compile Include="MonthAccountView.cs">
       <DependentUpon>FactoryModel.tt</DependentUpon>
     </Compile>
