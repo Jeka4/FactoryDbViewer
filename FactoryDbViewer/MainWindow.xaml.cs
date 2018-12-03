@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Net.Http.Headers;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows;
@@ -15,11 +16,8 @@ namespace FactoryDbViewer
     {
         private IPresenter _presenter;
 
-        private TableTypes _currentTableType;
-
         public MainWindow(Presenter presenter)
         {
-            _currentTableType = TableTypes.Undefined;
             _presenter = presenter;
 
             InitializeComponent();
@@ -33,9 +31,9 @@ namespace FactoryDbViewer
             };
         }
 
-        private void GetWorkersTable()
+        public void UpdateTable(IEnumerable data)
         {
-            DataGrid.ItemsSource = _presenter.GetWorkers();
+            DataGrid.ItemsSource = data;
         }
 
         private void AddWorker()
@@ -78,12 +76,6 @@ namespace FactoryDbViewer
             _presenter.DeleteWorker(worker);
         }
 
-
-        private void GetDepartmentsTable()
-        {
-            DataGrid.ItemsSource = _presenter.GetDepartments();
-        }
-
         private void AddDepartment()
         {
             Department department = new Department();
@@ -123,12 +115,6 @@ namespace FactoryDbViewer
                 return;
 
             _presenter.DeleteDepartment(department);
-        }
-
-
-        private void GetSpecialitiesTable()
-        {
-            DataGrid.ItemsSource = _presenter.GetSpecilities();
         }
 
         private void AddSpeciality()
@@ -174,31 +160,22 @@ namespace FactoryDbViewer
 
         private void TablesList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //try
-            //{
-            var tableType = (TableTypes) Enum.Parse(typeof (TableTypes), TablesListBox.SelectedItem.ToString());
-
-            DataGrid.ItemsSource = null;
-            _currentTableType = tableType;
-
-            switch (tableType)
+            try
             {
-                case TableTypes.Workers:
-                    GetWorkersTable();
-                    break;
-                case TableTypes.Departments:
-                    GetDepartmentsTable();
-                    break;
-                case TableTypes.Specialities:
-                    GetSpecialitiesTable();
-                    break;
+                var tableType = (TableTypes)Enum.Parse(typeof(TableTypes), TablesListBox.SelectedItem.ToString());
+
+                DataGrid.ItemsSource = null;
+                _presenter.CurrentTableType = tableType;
             }
-            //}
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         private void AddButton_OnClick(object sender, RoutedEventArgs e)
         {
-            switch (_currentTableType)
+            switch (_presenter.CurrentTableType)
             {
                 case TableTypes.Workers:
                     AddWorker();
@@ -217,7 +194,7 @@ namespace FactoryDbViewer
 
         private void EditButton_OnClick(object sender, RoutedEventArgs e)
         {
-            switch (_currentTableType)
+            switch (_presenter.CurrentTableType)
             {
                 case TableTypes.Workers:
                     EditWorker();
@@ -236,7 +213,7 @@ namespace FactoryDbViewer
 
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
-            switch (_currentTableType)
+            switch (_presenter.CurrentTableType)
             {
                 case TableTypes.Workers:
                     DeleteWorker();

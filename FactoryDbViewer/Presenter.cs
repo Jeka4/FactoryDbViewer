@@ -2,12 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using FactoryDataModel;
+using FactoryDbViewer.Components;
 using FactoryDbViewer.Tables;
 
 namespace FactoryDbViewer
 {
     public class Presenter : IPresenter
     {
+        public TableTypes CurrentTableType
+        {
+            get { return _currentTableType; }
+            set
+            {
+                _currentTableType = value;
+                UpdateViewTable();
+            }
+        }
+
+        private TableTypes _currentTableType;
+
         private readonly IMainWindow _window;
 
         private readonly DataModel _dataModel;
@@ -25,24 +38,12 @@ namespace FactoryDbViewer
             DepartmentsView department = _dataModel.GetDepartments().Single(d => d.Name == worker.Department);
             WorkerSpecialitiesView speciality = _dataModel.GetSpecialities().Single(s => s.name == worker.Speciality);
 
-            WorkerInformationView workerInformation = new WorkerInformationView
-            {
-                id = worker.Id,
-                address = worker.Address,
-                category = worker.Category,
-                firstName = worker.FirstName,
-                lastName = worker.LastName,
-                middleName = worker.MiddleName,
-                phone = worker.Phone,
-                tableNumber = worker.TableNumber,
-                workStartDate = worker.WorkStartDate,
-                Department = department,
-                Speciality = speciality,
-                speciality = worker.Speciality,
-                department = worker.Department
-            };
+            WorkerInformationView workerInformation = TableMapper.WorkerPocoToView(worker);
+            workerInformation.Department = department;
+            workerInformation.Speciality = speciality;
 
             _dataModel.InsertWorker(workerInformation);
+            UpdateViewTable();
         }
 
         public void EditWorker(Worker worker)
@@ -50,134 +51,76 @@ namespace FactoryDbViewer
             DepartmentsView department = _dataModel.GetDepartments().Single(d => d.Name == worker.Department);
             WorkerSpecialitiesView speciality = _dataModel.GetSpecialities().Single(s => s.name == worker.Speciality);
 
-            WorkerInformationView workerInformation = new WorkerInformationView
-            {
-                id = worker.Id,
-                address = worker.Address,
-                category = worker.Category,
-                firstName = worker.FirstName,
-                lastName = worker.LastName,
-                middleName = worker.MiddleName,
-                phone = worker.Phone,
-                tableNumber = worker.TableNumber,
-                workStartDate = worker.WorkStartDate,
-                Department = department,
-                Speciality = speciality,
-                DepartmentId = department.ID,
-                SpecialityId = speciality.id,
-                speciality = worker.Speciality,
-                department = worker.Department
-            };
+            WorkerInformationView workerInformation = TableMapper.WorkerPocoToView(worker);
+
+            workerInformation.Department = department;
+            workerInformation.Speciality = speciality;
+            workerInformation.DepartmentId = department.ID;
+            workerInformation.SpecialityId = speciality.id;
 
             _dataModel.UpdateWorker(workerInformation);
+            UpdateViewTable();
         }
 
         public void DeleteWorker(Worker worker)
         {
-            WorkerInformationView workerInformation = new WorkerInformationView
-            {
-                id = worker.Id,
-                address = worker.Address,
-                category = worker.Category,
-                firstName = worker.FirstName,
-                lastName = worker.LastName,
-                middleName = worker.MiddleName,
-                phone = worker.Phone,
-                tableNumber = worker.TableNumber,
-                workStartDate = worker.WorkStartDate,
-                speciality = worker.Speciality,
-                department = worker.Department
-            };
+            WorkerInformationView workerInformation = TableMapper.WorkerPocoToView(worker);
 
             _dataModel.DeleteWorker(workerInformation);
+            UpdateViewTable();
         }
 
         public List<Worker> GetWorkers()
         {
-            var workers = _dataModel.GetWorkers().Select(w => new Worker
-            {
-                Id = w.id,
-                Department = w.department,
-                Speciality = w.speciality,
-                Address = w.address,
-                Category = w.category,
-                FirstName = w.firstName,
-                LastName = w.lastName,  
-                MiddleName = w.middleName,
-                Phone = w.phone,
-                SpecialityId = w.SpecialityId,
-                TableNumber = w.tableNumber,
-                WorkStartDate = w.workStartDate,
-                DepartmentId = w.DepartmentId
-            }).ToList();
-
-            return workers;
+            return _dataModel.GetWorkers().Select(TableMapper.WorkerViewToPoco).ToList();
         }
 
         public void AddDepartment(Department department)
         {
-            var dep = new DepartmentsView
-            {
-                ID = department.ID,
-                Name = department.Name
-            };
+            var dep = TableMapper.DepartmentPocoToView(department);
 
             _dataModel.InsertDepartment(dep);
+            UpdateViewTable();
         }
 
         public void EditDepartment(Department department)
         {
-            var dep = new DepartmentsView
-            {
-                ID = department.ID,
-                Name = department.Name
-            };
+            var dep = TableMapper.DepartmentPocoToView(department);
 
             _dataModel.UpdateDepartment(dep);
+            UpdateViewTable();
         }
 
         public void DeleteDepartment(Department department)
         {
-            var dep = new DepartmentsView
-            {
-                ID = department.ID,
-                Name = department.Name
-            };
+            var dep = TableMapper.DepartmentPocoToView(department);
 
             _dataModel.DeleteDepartment(dep);
+            UpdateViewTable();
         }
 
         public void AddSpeciality(Speciality speciality)
         {
-            var spec = new WorkerSpecialitiesView
-            {
-                id = speciality.Id,
-                name = speciality.Name
-            };
+            var spec = TableMapper.SpecialityPocoToView(speciality);
 
             _dataModel.InsertSpeciality(spec);
+            UpdateViewTable();
         }
 
         public void EditSpeciality(Speciality speciality)
         {
-            var spec = new WorkerSpecialitiesView
-            {
-                id = speciality.Id,
-                name = speciality.Name
-            };
+            var spec = TableMapper.SpecialityPocoToView(speciality);
 
             _dataModel.UpdateSpeciality(spec);
+            UpdateViewTable();
         }
 
         public void DeleteSpeciality(Speciality speciality)
         {
-            var spec = new WorkerSpecialitiesView
-            {
-                id = speciality.Id,
-                name = speciality.Name
-            };
+            var spec = TableMapper.SpecialityPocoToView(speciality);
 
             _dataModel.DeleteSpeciality(spec);
+            UpdateViewTable();
         }
 
         public void AddDetail(Detail detail)
@@ -227,24 +170,12 @@ namespace FactoryDbViewer
 
         public List<Department> GetDepartments()
         {
-            var departments = _dataModel.GetDepartments().Select(d => new Department
-            {
-                ID = d.ID,
-                Name = d.Name
-            }).ToList();
-
-            return departments;
+            return _dataModel.GetDepartments().Select(TableMapper.DepartmentViewToPoco).ToList();
         }
 
         public List<Speciality> GetSpecilities()
         {
-            var specialities = _dataModel.GetSpecialities().Select(s => new Speciality
-            {
-                Id =  s.id,
-                Name = s.name
-            }).ToList();
-
-            return specialities;
+            return _dataModel.GetSpecialities().Select(TableMapper.SpecialityViewToPoco).ToList();
         }
 
         public List<Detail> GetDetails()
@@ -286,6 +217,23 @@ namespace FactoryDbViewer
             }).ToList();
 
             return monthAccounts;
+        }
+
+        public void UpdateViewTable()
+        {
+            switch (_currentTableType)
+            {
+                case TableTypes.Workers:
+                    _window.UpdateTable(GetWorkers());
+                    break;
+                case TableTypes.Departments:
+                    _window.UpdateTable(GetDepartments());
+                    break;
+                case TableTypes.Specialities:
+                    _window.UpdateTable(GetSpecilities());
+                    break;
+            }
+            
         }
     }
 }

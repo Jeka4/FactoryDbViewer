@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using FactoryDbViewer.Components;
 using FactoryDbViewer.Tables;
 
 namespace FactoryDbViewer
 {
     interface IPresenter
     {
+        TableTypes CurrentTableType { get; set; }
+        void UpdateViewTable();
         List<Worker> GetWorkers();
         List<Department> GetDepartments();
         List<Speciality> GetSpecilities();
