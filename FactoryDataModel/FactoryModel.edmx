@@ -80,7 +80,7 @@
             
             
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="firstName" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="lastName" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="middleName" Type="nvarchar" MaxLength="20" Nullable="false" />
@@ -278,7 +278,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="firstName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="lastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="middleName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
@@ -647,7 +647,6 @@
               <ModificationFunctionMapping>
                 <InsertFunction FunctionName="Хранилище FactoryDataModel.InsertDepartment" >
                   <ScalarProperty Name="Name" ParameterName="name" />
-                  <ResultBinding Name="ID" ColumnName="id" />
                 </InsertFunction>
                 <UpdateFunction FunctionName="Хранилище FactoryDataModel.UpdateDepartment" >
                   <ScalarProperty Name="Name" ParameterName="name" Version="Current" />
@@ -690,7 +689,6 @@
                   <ScalarProperty Name="lastName" ParameterName="lastName" />
                   <ScalarProperty Name="middleName" ParameterName="middleName" />
                   <ScalarProperty Name="firstName" ParameterName="firstName" />
-                  <ResultBinding Name="id" ColumnName="id" />
                 </InsertFunction>
                 <UpdateFunction FunctionName="Хранилище FactoryDataModel.UpdateWorker">
                   <ScalarProperty Name="SpecialityId" ParameterName="specialityId" Version="Current" />
@@ -704,7 +702,6 @@
                   <ScalarProperty Name="middleName" ParameterName="middleName" Version="Current" />
                   <ScalarProperty Name="firstName" ParameterName="firstName" Version="Current" />
                   <ScalarProperty Name="id" ParameterName="id" Version="Current" />
-                  <ResultBinding Name="id" ColumnName="id" />
                 </UpdateFunction>
                 <DeleteFunction FunctionName="Хранилище FactoryDataModel.DeleteWorker">
                   <ScalarProperty Name="id" ParameterName="id" />
@@ -723,7 +720,6 @@
               <ModificationFunctionMapping>
                 <InsertFunction FunctionName="Хранилище FactoryDataModel.InsertSpeciality" >
                   <ScalarProperty Name="name" ParameterName="speciality" />
-                  <ResultBinding Name="id" ColumnName="id" />
                 </InsertFunction>
                 <UpdateFunction FunctionName="Хранилище FactoryDataModel.UpdateSpeciality">
                   <ScalarProperty Name="name" ParameterName="name" Version="Current" />
