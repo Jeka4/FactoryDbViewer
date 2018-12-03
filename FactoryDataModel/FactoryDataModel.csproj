@@ -109,6 +109,7 @@
     <Compile Include="InsertWorker_Result.cs">
       <DependentUpon>FactoryModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DepartmentsMetaData.cs" />
     <Compile Include="MonthAccountView.cs">
       <DependentUpon>FactoryModel.tt</DependentUpon>
     </Compile>
