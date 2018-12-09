@@ -8,5 +8,6 @@ namespace FactoryDbViewer
     {
         void Show();
         void UpdateTable(IEnumerable data);
+        void ShowMessage(string text);
     }
 }

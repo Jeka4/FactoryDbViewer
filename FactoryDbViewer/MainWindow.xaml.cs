@@ -154,6 +154,129 @@ namespace FactoryDbViewer
             _presenter.DeleteSpeciality(speciality);
         }
 
+        private void AddDetail()
+        {
+            Detail detail = new Detail();
+
+            var editDetailWindow = new EditDetailWindow(detail);
+
+            editDetailWindow.ShowDialog();
+
+            if (editDetailWindow.DialogResult == false)
+                return;
+
+            _presenter.AddDetail(detail);
+        }
+
+        private void EditDetail()
+        {
+            Detail detail = DataGrid.SelectedItem as Detail;
+
+            if (detail == null)
+                return;
+
+            var editDetailWindow = new EditDetailWindow(detail);
+
+            editDetailWindow.ShowDialog();
+
+            if (editDetailWindow.DialogResult == false)
+                return;
+
+            _presenter.EditDetail(detail);
+        }
+
+        private void DeleteDetail()
+        {
+            Detail detail = DataGrid.SelectedItem as Detail;
+
+            if (detail == null)
+                return;
+
+            _presenter.DeleteDetail(detail);
+        }
+
+        private void AddDailyAccount()
+        {
+            DailyAccount dailyAccount = new DailyAccount();
+
+            var editDailyAccountWindow = new EditDailyAccountWindow(dailyAccount);
+
+            editDailyAccountWindow.ShowDialog();
+
+            if (editDailyAccountWindow.DialogResult == false)
+                return;
+
+            _presenter.AddDailyAccount(dailyAccount);
+        }
+
+        private void EditDailyAccount()
+        {
+            DailyAccount dailyAccount = DataGrid.SelectedItem as DailyAccount;
+
+            if (dailyAccount == null)
+                return;
+
+            var editDailyAccountWindow = new EditDailyAccountWindow(dailyAccount);
+
+            editDailyAccountWindow.ShowDialog();
+
+            if (editDailyAccountWindow.DialogResult == false)
+                return;
+
+            _presenter.EditDailyAccount(dailyAccount);
+        }
+
+        private void DeleteDailyAccount()
+        {
+            DailyAccount dailyAccount = DataGrid.SelectedItem as DailyAccount;
+
+            if (dailyAccount == null)
+                return;
+
+            _presenter.DeleteDailyAccount(dailyAccount);
+        }
+
+        private void AddMonthAccount()
+        {
+            MonthAccount monthAccount = new MonthAccount();
+
+            var editMonthAccountWindow = new EditMonthAccountWindow(monthAccount);
+
+            editMonthAccountWindow.ShowDialog();
+
+            if (editMonthAccountWindow.DialogResult == false)
+                return;
+
+            _presenter.AddMonthAccount(monthAccount);
+        }
+
+        private void EditMonthAccount()
+        {
+            MonthAccount monthAccount = DataGrid.SelectedItem as MonthAccount;
+
+            if (monthAccount == null)
+                return;
+
+            var editMonthAccountWindow = new EditMonthAccountWindow(monthAccount);
+
+            editMonthAccountWindow.ShowDialog();
+
+            if (editMonthAccountWindow.DialogResult == false)
+                return;
+
+            _presenter.EditMonthAccount(monthAccount);
+        }
+
+        private void DeleteMonthAccount()
+        {
+            MonthAccount monthAccount = DataGrid.SelectedItem as MonthAccount;
+
+            if (monthAccount == null)
+                return;
+
+            _presenter.DeleteMonthAccount(monthAccount);
+        }
+
         private void TablesList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -182,8 +305,14 @@ namespace FactoryDbViewer
                 case TableTypes.Specialities:
                     AddSpeciality();
                     break;
-                default:
-                    
+                case TableTypes.Details:
+                AddDetail();
+                    break;
+                case TableTypes.DailyAccounts:
+                    AddDailyAccount();
+                    break;
+                case TableTypes.MonthAccounts:
+                    AddMonthAccount();
                     break;
             }
         }
@@ -201,8 +330,14 @@ namespace FactoryDbViewer
                 case TableTypes.Specialities:
                     EditSpeciality();
                     break;
-                default:
-
+                case TableTypes.Details:
+                    EditDetail();
+                    break;
+                case TableTypes.DailyAccounts:
+                    EditDailyAccount();
+                    break;
+                case TableTypes.MonthAccounts:
+                    EditMonthAccount();
                     break;
             }
         }
@@ -220,10 +355,21 @@ namespace FactoryDbViewer
                 case TableTypes.Specialities:
                     DeleteSpeciality();
                     break;
-                default:
-
+                case TableTypes.Details:
+                    DeleteDetail();
+                    break;
+                case TableTypes.DailyAccounts:
+                    DeleteDailyAccount();
+                    break;
+                case TableTypes.MonthAccounts:
+                    DeleteMonthAccount();
                     break;
             }
+        }
+
+        public void ShowMessage(string text)
+        {
+            MessageBox.Show(text, "FactoryDbViewer", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
 }

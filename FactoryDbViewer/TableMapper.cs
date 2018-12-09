@@ -84,7 +84,9 @@ namespace FactoryDbViewer
             return new DetailsView
             {
                 id = poco.Id,
-                name = poco.Name
+                name = poco.Name,
+                blankMass = poco.BlankMass,
+                detailMass = poco.DetailMass
             };
         }
 
@@ -93,7 +95,9 @@ namespace FactoryDbViewer
             return new Detail
             {
                 Id = view.id,
-                Name = view.name
+                Name = view.name,
+                BlankMass = view.blankMass,
+                DetailMass = view.detailMass
             };
         }
 
