@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using FactoryDataModel;
 using FactoryDbViewer.Components;
@@ -125,47 +124,74 @@ namespace FactoryDbViewer
 
         public void AddDetail(Detail detail)
         {
-            throw new NotImplementedException();
+            var det = TableMapper.DetailPocoToView(detail);
+
+            _dataModel.InsertDetail(det);
+            UpdateViewTable();
         }
 
         public void EditDetail(Detail detail)
         {
-            throw new NotImplementedException();
+            var det = TableMapper.DetailPocoToView(detail);
+
+            _dataModel.UpdateDetail(det);
+            UpdateViewTable();
         }
 
         public void DeleteDetail(Detail detail)
         {
-            throw new NotImplementedException();
+            var det = TableMapper.DetailPocoToView(detail);
+
+            _dataModel.DeleteDetail(det);
+            UpdateViewTable();
         }
 
         public void AddDailyAccount(DailyAccount dailyAccount)
         {
-            throw new NotImplementedException();
+            var dailyAcc = TableMapper.DailyAccountPocoToView(dailyAccount);
+
+            _dataModel.InsertDailyAccount(dailyAcc);
+            UpdateViewTable();
         }
 
         public void EditDailyAccount(DailyAccount dailyAccount)
         {
-            throw new NotImplementedException();
+            var dailyAcc = TableMapper.DailyAccountPocoToView(dailyAccount);
+
+            _dataModel.UpdateDailyAccount(dailyAcc);
+            UpdateViewTable();
         }
 
         public void DeleteDailyAccount(DailyAccount dailyAccount)
         {
-            throw new NotImplementedException();
+            var dailyAcc = TableMapper.DailyAccountPocoToView(dailyAccount);
+
+            _dataModel.DeleteDailyAccount(dailyAcc);
+            UpdateViewTable();
         }
 
         public void AddMonthAccount(MonthAccount monthAccount)
         {
-            throw new NotImplementedException();
+            var monthAcc = TableMapper.MonthAccountPocoToView(monthAccount);
+
+            _dataModel.InsertDetailsMonthPlan(monthAcc);
+            UpdateViewTable();
         }
 
         public void EditMonthAccount(MonthAccount monthAccount)
         {
-            throw new NotImplementedException();
+            var monthAcc = TableMapper.MonthAccountPocoToView(monthAccount);
+
+            _dataModel.UpdateDetailsMonthPlan(monthAcc);
+            UpdateViewTable();
         }
 
         public void DeleteMonthAccount(MonthAccount monthAccount)
         {
-            throw new NotImplementedException();
+            var monthAcc = TableMapper.MonthAccountPocoToView(monthAccount);
+
+            _dataModel.DeleteDetailsMonthPlan(monthAcc);
+            UpdateViewTable();
         }
 
         public List<Department> GetDepartments()
@@ -231,6 +257,15 @@ namespace FactoryDbViewer
                     break;
                 case TableTypes.Specialities:
                     _window.UpdateTable(GetSpecilities());
+                    break;
+                case TableTypes.Details:
+                    _window.UpdateTable(GetDetails());
+                    break;
+                case TableTypes.DailyAccounts:
+                    _window.UpdateTable(GetDailyAccounts());
+                    break;
+                case TableTypes.MonthAccounts:
+                    _window.UpdateTable(GetMonthAccounts());
                     break;
             }
             

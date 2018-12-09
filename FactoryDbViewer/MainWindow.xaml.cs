@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using System.Net.Http.Headers;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows;
@@ -23,12 +24,7 @@ namespace FactoryDbViewer
             InitializeComponent();
 
             //
-            TablesListBox.ItemsSource = new[]
-            {
-                TableTypes.Workers.ToString(),
-                TableTypes.Departments.ToString(),
-                TableTypes.Specialities.ToString(),
-            };
+            TablesListBox.ItemsSource = Enum.GetNames(typeof(TableTypes)).Skip(1).ToArray();
         }
 
         public void UpdateTable(IEnumerable data)

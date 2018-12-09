@@ -3,7 +3,7 @@ using FactoryDbViewer.Tables;
 
 namespace FactoryDbViewer
 {
-    static class TableMapper
+    static internal class TableMapper
     {
         public static Worker WorkerViewToPoco(WorkerInformationView view)
         {
@@ -76,6 +76,72 @@ namespace FactoryDbViewer
             {
                 Id = view.id,
                 Name = view.name
+            };
+        }
+
+        public static DetailsView DetailPocoToView(Detail poco)
+        {
+            return new DetailsView
+            {
+                id = poco.Id,
+                name = poco.Name
+            };
+        }
+
+        public static Detail DetailViewToPoco(DetailsView view)
+        {
+            return new Detail
+            {
+                Id = view.id,
+                Name = view.name
+            };
+        }
+
+        public static DailyAccountView DailyAccountPocoToView(DailyAccount poco)
+        {
+            return new DailyAccountView
+            {
+                workerID = poco.WorkerId,
+                detailID = poco.DetailId,
+                date = poco.Date,
+                madeCount = poco.MadeCount,
+                defectCount = poco.DefectCount,
+                norm = poco.Norm
+            };
+        }
+
+        public static DailyAccount DailyAccountViewToPoco(DailyAccountView view)
+        {
+            return new DailyAccount
+            {
+                WorkerId = view.workerID,
+                DetailId = view.detailID,
+                Date = view.date,
+                MadeCount = view.madeCount,
+                DefectCount = view.defectCount,
+                Norm = view.norm
+            };
+        }
+
+        public static MonthAccountView MonthAccountPocoToView(MonthAccount poco)
+        {
+            return new MonthAccountView
+            {
+                departmentID = poco.DepartmentId,
+                detailID = poco.DetailId,
+                date = poco.Date,
+                mustProduce = poco.MustProduce
+            };
+        }
+
+        public static MonthAccount MonthAccountViewToPoco(MonthAccountView view)
+        {
+            return new MonthAccount
+            {
+                DepartmentId = view.departmentID,
+                DetailId = view.detailID,
+                Date = view.date,
+                MustProduce = view.mustProduce
             };
         }
     }
