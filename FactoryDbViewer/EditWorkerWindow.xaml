@@ -46,6 +46,7 @@
         <TextBox Text="{Binding Path=WorkStartDate, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="9" />
         <Button Name="ApplyButton" 
                 Click="ApplyButton_OnClick"
+                Content="Добавить\редактировать"
                 Grid.Row="10"
                 Grid.ColumnSpan="2"/>
     </Grid>

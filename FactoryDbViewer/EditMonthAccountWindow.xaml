@@ -28,6 +28,7 @@
         <TextBox Text="{Binding Path=MustProduce, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3" />
         <Button Name="ApplyButton" 
                 Click="ApplyButton_OnClick"
+                Content="Добавить\редактировать"
                 Grid.Row="4"
                 Grid.ColumnSpan="2"/>
     </Grid>
