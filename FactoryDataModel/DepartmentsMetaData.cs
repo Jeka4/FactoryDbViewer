@@ -9,7 +9,7 @@ namespace FactoryDataModel
 
     public class DepartmentsMetaData
     {
-        [Required]
+        [Required, Range(0, int.MaxValue)]
         public int ID { get; set; }
 
         [Required]

@@ -9,7 +9,7 @@ namespace FactoryDataModel
 
     public class WorkersMetaData
     {
-        [Required]
+        [Required, Range(0, int.MaxValue)]
         public int id { get; set; }
         [Required]
         public string firstName { get; set; }
@@ -23,16 +23,16 @@ namespace FactoryDataModel
         public string department { get; set; }
         [Required]
         public string speciality { get; set; }
-        [Required]
+        [Required, Range(0, int.MaxValue)]
         public int category { get; set; }
         [Required]
         public string address { get; set; }
         [Required]
         public string phone { get; set; }
         public System.DateTime workStartDate { get; set; }
-        [Required]
+        [Required, Range(0, int.MaxValue)]
         public int DepartmentId { get; set; }
-        [Required]
+        [Required, Range(0, int.MaxValue)]
         public int SpecialityId { get; set; }
     }
 }

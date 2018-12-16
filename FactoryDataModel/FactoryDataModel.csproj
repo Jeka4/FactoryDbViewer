@@ -66,11 +66,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DailyAccountsMetaData.cs" />
     <Compile Include="DailyAccountView.cs">
       <DependentUpon>FactoryModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel.cs" />
     <Compile Include="DetailsMetaData.cs" />
+    <Compile Include="MonthAccountsMetaData.cs" />
     <Compile Include="WorkersMetaData.cs" />
     <Compile Include="SpecialitiesMetaData.cs" />
     <Compile Include="DepartmentsView.cs">

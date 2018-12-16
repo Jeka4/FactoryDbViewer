@@ -302,7 +302,7 @@ namespace FactoryDbViewer
                 _dataModel.UpdateDailyAccount(dailyAcc);
                 UpdateViewTable();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 _window.ShowMessage("Ошибка при редактировании записи");
             }
