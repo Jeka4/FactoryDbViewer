@@ -2,12 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using FactoryDataModel;
+using FactoryDbViewer.Components;
 using FactoryDbViewer.Tables;
 
 namespace FactoryDbViewer
 {
     public class Presenter : IPresenter
     {
+        public TableTypes CurrentTableType
+        {
+            get { return _currentTableType; }
+            set
+            {
+                _currentTableType = value;
+                UpdateViewTable();
+            }
+        }
+
+        private TableTypes _currentTableType;
+
         private readonly IMainWindow _window;
 
         private readonly DataModel _dataModel;
@@ -22,270 +35,420 @@ namespace FactoryDbViewer
 
         public void AddWorker(Worker worker)
         {
-            DepartmentsView department = _dataModel.GetDepartments().Single(d => d.Name == worker.Department);
-            WorkerSpecialitiesView speciality = _dataModel.GetSpecialities().Single(s => s.name == worker.Speciality);
-
-            WorkerInformationView workerInformation = new WorkerInformationView
+            try
             {
-                id = worker.Id,
-                address = worker.Address,
-                category = worker.Category,
-                firstName = worker.FirstName,
-                lastName = worker.LastName,
-                middleName = worker.MiddleName,
-                phone = worker.Phone,
-                tableNumber = worker.TableNumber,
-                workStartDate = worker.WorkStartDate,
-                Department = department,
-                Speciality = speciality,
-                speciality = worker.Speciality,
-                department = worker.Department
-            };
+                DepartmentsView department = _dataModel.GetDepartments().Single(d => d.Name == worker.Department);
+                WorkerSpecialitiesView speciality = _dataModel.GetSpecialities().Single(s => s.name == worker.Speciality);
 
-            _dataModel.InsertWorker(workerInformation);
+                WorkerInformationView workerInformation = TableMapper.WorkerPocoToView(worker);
+                workerInformation.Department = department;
+                workerInformation.Speciality = speciality;
+
+                _dataModel.InsertWorker(workerInformation);
+                UpdateViewTable();
+            }
+            catch (Exception)
+            {
+                _window.ShowMessage("Ошибка при добавлении записи");
+            }
+            finally
+            {
+                UpdateViewTable();
+            }
         }
 
         public void EditWorker(Worker worker)
         {
-            DepartmentsView department = _dataModel.GetDepartments().Single(d => d.Name == worker.Department);
-            WorkerSpecialitiesView speciality = _dataModel.GetSpecialities().Single(s => s.name == worker.Speciality);
-
-            WorkerInformationView workerInformation = new WorkerInformationView
+            try
             {
-                id = worker.Id,
-                address = worker.Address,
-                category = worker.Category,
-                firstName = worker.FirstName,
-                lastName = worker.LastName,
-                middleName = worker.MiddleName,
-                phone = worker.Phone,
-                tableNumber = worker.TableNumber,
-                workStartDate = worker.WorkStartDate,
-                Department = department,
-                Speciality = speciality,
-                DepartmentId = department.ID,
-                SpecialityId = speciality.id,
-                speciality = worker.Speciality,
-                department = worker.Department
-            };
+                DepartmentsView department = _dataModel.GetDepartments().Single(d => d.Name == worker.Department);
+                WorkerSpecialitiesView speciality = _dataModel.GetSpecialities()
+                    .Single(s => s.name == worker.Speciality);
 
-            _dataModel.UpdateWorker(workerInformation);
+                WorkerInformationView workerInformation = TableMapper.WorkerPocoToView(worker);
+
+                workerInformation.Department = department;
+                workerInformation.Speciality = speciality;
+                workerInformation.DepartmentId = department.ID;
+                workerInformation.SpecialityId = speciality.id;
+
+                _dataModel.UpdateWorker(workerInformation);
+            }
+            catch (Exception)
+            {
+                _window.ShowMessage("Ошибка при редактировании записи");
+            }
+            finally
+            {
+                UpdateViewTable();
+            }
         }
 
         public void DeleteWorker(Worker worker)
         {
-            WorkerInformationView workerInformation = new WorkerInformationView
+            try
             {
-                id = worker.Id,
-                address = worker.Address,
-                category = worker.Category,
-                firstName = worker.FirstName,
-                lastName = worker.LastName,
-                middleName = worker.MiddleName,
-                phone = worker.Phone,
-                tableNumber = worker.TableNumber,
-                workStartDate = worker.WorkStartDate,
-                speciality = worker.Speciality,
-                department = worker.Department
-            };
+                WorkerInformationView workerInformation = TableMapper.WorkerPocoToView(worker);
 
-            _dataModel.DeleteWorker(workerInformation);
-        }
-
-        public List<Worker> GetWorkers()
-        {
-            var workers = _dataModel.GetWorkers().Select(w => new Worker
+                _dataModel.DeleteWorker(workerInformation);
+                UpdateViewTable();
+            }
+            catch (Exception)
             {
-                Id = w.id,
-                Department = w.department,
-                Speciality = w.speciality,
-                Address = w.address,
-                Category = w.category,
-                FirstName = w.firstName,
-                LastName = w.lastName,  
-                MiddleName = w.middleName,
-                Phone = w.phone,
-                SpecialityId = w.SpecialityId,
-                TableNumber = w.tableNumber,
-                WorkStartDate = w.workStartDate,
-                DepartmentId = w.DepartmentId
-            }).ToList();
-
-            return workers;
+                _window.ShowMessage("Ошибка при удалении записи");
+            }
+            finally
+            {
+                UpdateViewTable();
+            }
         }
 
         public void AddDepartment(Department department)
         {
-            var dep = new DepartmentsView
+            try
             {
-                ID = department.ID,
-                Name = department.Name
-            };
+                var dep = TableMapper.DepartmentPocoToView(department);
 
-            _dataModel.InsertDepartment(dep);
+                _dataModel.InsertDepartment(dep);
+                UpdateViewTable();
+            }
+            catch (Exception)
+            {
+                _window.ShowMessage("Ошибка при добавлении записи");
+            }
+            finally
+            {
+                UpdateViewTable();
+            }
         }
 
         public void EditDepartment(Department department)
         {
-            var dep = new DepartmentsView
+            try
             {
-                ID = department.ID,
-                Name = department.Name
-            };
+                var dep = TableMapper.DepartmentPocoToView(department);
 
-            _dataModel.UpdateDepartment(dep);
+                _dataModel.UpdateDepartment(dep);
+                UpdateViewTable();
+            }
+            catch (Exception)
+            {
+                _window.ShowMessage("Ошибка при редактировании записи");
+            }
+            finally
+            {
+                UpdateViewTable();
+            }
         }
 
         public void DeleteDepartment(Department department)
         {
-            var dep = new DepartmentsView
+            try
             {
-                ID = department.ID,
-                Name = department.Name
-            };
+                var dep = TableMapper.DepartmentPocoToView(department);
 
-            _dataModel.DeleteDepartment(dep);
+                _dataModel.DeleteDepartment(dep);
+                UpdateViewTable();
+            }
+            catch (Exception)
+            {
+                _window.ShowMessage("Ошибка при удалении записи");
+            }
+            finally
+            {
+                UpdateViewTable();
+            }
         }
 
         public void AddSpeciality(Speciality speciality)
         {
-            var spec = new WorkerSpecialitiesView
+            try
             {
-                id = speciality.Id,
-                name = speciality.Name
-            };
+                var spec = TableMapper.SpecialityPocoToView(speciality);
 
-            _dataModel.InsertSpeciality(spec);
+                _dataModel.InsertSpeciality(spec);
+                UpdateViewTable();
+            }
+            catch (Exception)
+            {
+                _window.ShowMessage("Ошибка при добавлении записи");
+            }
+            finally
+            {
+                UpdateViewTable();
+            }
         }
 
         public void EditSpeciality(Speciality speciality)
         {
-            var spec = new WorkerSpecialitiesView
+            try
             {
-                id = speciality.Id,
-                name = speciality.Name
-            };
+                var spec = TableMapper.SpecialityPocoToView(speciality);
 
-            _dataModel.UpdateSpeciality(spec);
+                _dataModel.UpdateSpeciality(spec);
+                UpdateViewTable();
+            }
+            catch (Exception)
+            {
+                _window.ShowMessage("Ошибка при редактировании записи");
+            }
+            finally
+            {
+                UpdateViewTable();
+            }
         }
 
         public void DeleteSpeciality(Speciality speciality)
         {
-            var spec = new WorkerSpecialitiesView
+            try
             {
-                id = speciality.Id,
-                name = speciality.Name
-            };
+                var spec = TableMapper.SpecialityPocoToView(speciality);
 
-            _dataModel.DeleteSpeciality(spec);
+                _dataModel.DeleteSpeciality(spec);
+                UpdateViewTable();
+            }
+            catch (Exception)
+            {
+                _window.ShowMessage("Ошибка при удалении записи");
+            }
+            finally
+            {
+                UpdateViewTable();
+            }
         }
 
         public void AddDetail(Detail detail)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var det = TableMapper.DetailPocoToView(detail);
+
+                _dataModel.InsertDetail(det);
+                UpdateViewTable();
+            }
+            catch (Exception)
+            {
+                _window.ShowMessage("Ошибка при добавлении записи");
+            }
+            finally
+            {
+                UpdateViewTable();
+            }
         }
 
         public void EditDetail(Detail detail)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var det = TableMapper.DetailPocoToView(detail);
+
+                _dataModel.UpdateDetail(det);
+                UpdateViewTable();
+            }
+            catch (Exception)
+            {
+                _window.ShowMessage("Ошибка при редактировании записи");
+            }
+            finally
+            {
+                UpdateViewTable();
+            }
         }
 
         public void DeleteDetail(Detail detail)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var det = TableMapper.DetailPocoToView(detail);
+
+                _dataModel.DeleteDetail(det);
+                UpdateViewTable();
+            }
+            catch (Exception)
+            {
+                _window.ShowMessage("Ошибка при удалении записи");
+            }
+            finally
+            {
+                UpdateViewTable();
+            }
         }
 
         public void AddDailyAccount(DailyAccount dailyAccount)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var dailyAcc = TableMapper.DailyAccountPocoToView(dailyAccount);
+
+                _dataModel.InsertDailyAccount(dailyAcc);
+                UpdateViewTable();
+            }
+            catch (Exception)
+            {
+                _window.ShowMessage("Ошибка при добавлении записи");
+            }
+            finally
+            {
+                UpdateViewTable();
+            }
         }
 
         public void EditDailyAccount(DailyAccount dailyAccount)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var dailyAcc = TableMapper.DailyAccountPocoToView(dailyAccount);
+
+                _dataModel.UpdateDailyAccount(dailyAcc);
+                UpdateViewTable();
+            }
+            catch (Exception ex)
+            {
+                _window.ShowMessage("Ошибка при редактировании записи");
+            }
+            finally
+            {
+                UpdateViewTable();
+            }
         }
 
         public void DeleteDailyAccount(DailyAccount dailyAccount)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var dailyAcc = TableMapper.DailyAccountPocoToView(dailyAccount);
+
+                _dataModel.DeleteDailyAccount(dailyAcc);
+                UpdateViewTable();
+            }
+            catch (Exception)
+            {
+                _window.ShowMessage("Ошибка при удалении записи");
+            }
+            finally
+            {
+                UpdateViewTable();
+            }
         }
 
         public void AddMonthAccount(MonthAccount monthAccount)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var monthAcc = TableMapper.MonthAccountPocoToView(monthAccount);
+
+                _dataModel.InsertDetailsMonthPlan(monthAcc);
+                UpdateViewTable();
+            }
+            catch (Exception)
+            {
+                _window.ShowMessage("Ошибка при добавлении записи");
+            }
+            finally
+            {
+                UpdateViewTable();
+            }
         }
 
         public void EditMonthAccount(MonthAccount monthAccount)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var monthAcc = TableMapper.MonthAccountPocoToView(monthAccount);
+
+                _dataModel.UpdateDetailsMonthPlan(monthAcc);
+                UpdateViewTable();
+            }
+            catch (Exception)
+            {
+                _window.ShowMessage("Ошибка при редактировании записи");
+            }
+            finally
+            {
+                UpdateViewTable();
+            }
         }
 
         public void DeleteMonthAccount(MonthAccount monthAccount)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var monthAcc = TableMapper.MonthAccountPocoToView(monthAccount);
+
+                _dataModel.DeleteDetailsMonthPlan(monthAcc);
+                UpdateViewTable();
+            }
+            catch (Exception)
+            {
+                _window.ShowMessage("Ошибка при удалении записи");
+            }
+            finally
+            {
+                UpdateViewTable();
+            }
+        }
+
+        public List<Worker> GetWorkers()
+        {
+            return _dataModel.GetWorkers().Select(TableMapper.WorkerViewToPoco).ToList();
         }
 
         public List<Department> GetDepartments()
         {
-            var departments = _dataModel.GetDepartments().Select(d => new Department
-            {
-                ID = d.ID,
-                Name = d.Name
-            }).ToList();
-
-            return departments;
+            return _dataModel.GetDepartments().Select(TableMapper.DepartmentViewToPoco).ToList();
         }
 
         public List<Speciality> GetSpecilities()
         {
-            var specialities = _dataModel.GetSpecialities().Select(s => new Speciality
-            {
-                Id =  s.id,
-                Name = s.name
-            }).ToList();
-
-            return specialities;
+            return _dataModel.GetSpecialities().Select(TableMapper.SpecialityViewToPoco).ToList();
         }
 
         public List<Detail> GetDetails()
         {
-            var details = _dataModel.GetDetails().Select(d => new Detail
-            {
-                Id = d.id,
-                Name = d.name,
-                BlankMass = d.blankMass,
-                DetailMass = d.detailMass
-            }).ToList();
-
-            return details;
+            return _dataModel.GetDetails().Select(TableMapper.DetailViewToPoco).ToList();
         }
 
         public List<DailyAccount> GetDailyAccounts()
         {
-            var dailyAccounts = _dataModel.GetDailyAccount().Select(d => new DailyAccount
-            {
-                WorkerId = d.workerID,
-                DetailId = d.detailID,
-                Date = d.date,
-                DefectCount = d.defectCount,
-                MadeCount = d.madeCount,
-                Norm = d.norm
-            }).ToList();
-
-            return dailyAccounts;
+            return _dataModel.GetDailyAccount().Select(TableMapper.DailyAccountViewToPoco).ToList();
         }
 
         public List<MonthAccount> GetMonthAccounts()
         {
-            var monthAccounts = _dataModel.GetMonthAccount().Select(m => new MonthAccount
-            {
-                DetailId = m.detailID,
-                Date = m.date,
-                DepartmentId = m.departmentID,
-                MustProduce = m.mustProduce
-            }).ToList();
+            return _dataModel.GetMonthAccount().Select(TableMapper.MonthAccountViewToPoco).ToList();
+        }
 
-            return monthAccounts;
+        public void UpdateViewTable()
+        {
+            try
+            {
+                switch (_currentTableType)
+                {
+                    case TableTypes.Workers:
+                        _window.UpdateTable(GetWorkers());
+                        break;
+                    case TableTypes.Departments:
+                        _window.UpdateTable(GetDepartments());
+                        break;
+                    case TableTypes.Specialities:
+                        _window.UpdateTable(GetSpecilities());
+                        break;
+                    case TableTypes.Details:
+                        _window.UpdateTable(GetDetails());
+                        break;
+                    case TableTypes.DailyAccounts:
+                        _window.UpdateTable(GetDailyAccounts());
+                        break;
+                    case TableTypes.MonthAccounts:
+                        _window.UpdateTable(GetMonthAccounts());
+                        break;
+                }
+            }
+            catch
+            {
+                _window.ShowMessage("Ошибка при получении данных");
+            }
+
         }
     }
 }

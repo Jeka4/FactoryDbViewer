@@ -8,55 +8,6 @@ namespace FactoryDataModel
 {
     public class DataModel
     {
-        public DataModel()
-        {
-            /*
-            spec.name = "Super spec";
-            dep.Name = "Top secret";
-            */
-            /*
-            using (var contex = new DbFactory())
-            {
-
-                var dep = GetDepartments().First();
-                var spec = GetSpecialities().First();
-
-                var worker = contex.WorkerInformationView.Create();
-
-                worker.id = 1;
-                worker.firstName = "Иваныч";
-                worker.middleName = "111";
-                worker.lastName = "222";
-                worker.address = "333";
-                worker.phone = "123-1321";
-                worker.category = 2;
-                worker.tableNumber = "AAA-BBB-123";
-                worker.workStartDate = DateTime.Now;
-                worker.speciality = string.Empty;
-                worker.department = string.Empty;
-
-                worker.Department = dep;
-                worker.Speciality = spec;
-
-
-
-                contex.DepartmentsView.Attach(dep);
-                contex.WorkerSpecialitiesView.Attach(spec);
-                var entityState = contex.Entry(dep).State;
-                contex.WorkerInformationView.Add(worker);
-                contex.SaveChanges();
-                
-            }
-            */
-            
-            //InsertWorker(worker);
-            
-
-            //var d = GetDetails().Find(p => p.id == 2);
-            //d.name = "AZAZA2";
-            //UpdateDetail(d);
-        }
-
         public List<DetailsView> GetDetails()
         {
             using (var contex = new DbFactory())
@@ -109,7 +60,7 @@ namespace FactoryDataModel
         {
             using (var contex = new DbFactory())
             {
-                var result = contex.DetailsView.Add(detail);
+                contex.DetailsView.Add(detail);
 
                 contex.SaveChanges();
             }
@@ -119,7 +70,7 @@ namespace FactoryDataModel
         {
             using (var contex = new DbFactory())
             {
-                var result = contex.WorkerSpecialitiesView.Add(speciality);
+                contex.WorkerSpecialitiesView.Add(speciality);
 
                 contex.SaveChanges();
             }
@@ -129,7 +80,7 @@ namespace FactoryDataModel
         {
             using (var contex = new DbFactory())
             {
-                var result = contex.DepartmentsView.Add(department);
+                contex.DepartmentsView.Add(department);
 
                 contex.SaveChanges();
             }
@@ -139,7 +90,7 @@ namespace FactoryDataModel
         {
             using (var contex = new DbFactory())
             {
-                var result = contex.DailyAccountView.Add(dailyAccount);
+                contex.DailyAccountView.Add(dailyAccount);
 
                 contex.SaveChanges();
             }
@@ -149,7 +100,7 @@ namespace FactoryDataModel
         {
             using (var contex = new DbFactory())
             {
-                var result = contex.MonthAccountView.Add(monthAccount);
+                contex.MonthAccountView.Add(monthAccount);
 
                 contex.SaveChanges();
             }

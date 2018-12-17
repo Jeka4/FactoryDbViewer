@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FactoryDbViewer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="700">
+        Title="FactoryDb" Height="500" Width="700">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>

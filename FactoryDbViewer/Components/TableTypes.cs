@@ -12,6 +12,8 @@ namespace FactoryDbViewer.Components
         Specialities,
         [Description("Таблица цехов")]
         Departments,
+        [Description("Таблица деталей")]
+        Details,
         [Description("Таблица ежедневных отчётов")]
         DailyAccounts,
         [Description("Таблица ежемесячных отчётов")]

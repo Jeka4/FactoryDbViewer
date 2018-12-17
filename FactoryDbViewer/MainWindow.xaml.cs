@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Linq;
 using System.Net.Http.Headers;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows;
@@ -15,27 +17,19 @@ namespace FactoryDbViewer
     {
         private IPresenter _presenter;
 
-        private TableTypes _currentTableType;
-
         public MainWindow(Presenter presenter)
         {
-            _currentTableType = TableTypes.Undefined;
             _presenter = presenter;
 
             InitializeComponent();
 
             //
-            TablesListBox.ItemsSource = new[]
-            {
-                TableTypes.Workers.ToString(),
-                TableTypes.Departments.ToString(),
-                TableTypes.Specialities.ToString(),
-            };
+            TablesListBox.ItemsSource = Enum.GetNames(typeof(TableTypes)).Skip(1).ToArray();
         }
 
-        private void GetWorkersTable()
+        public void UpdateTable(IEnumerable data)
         {
-            DataGrid.ItemsSource = _presenter.GetWorkers();
+            DataGrid.ItemsSource = data;
         }
 
         private void AddWorker()
@@ -76,12 +70,6 @@ namespace FactoryDbViewer
                 return;
 
             _presenter.DeleteWorker(worker);
-        }
-
-
-        private void GetDepartmentsTable()
-        {
-            DataGrid.ItemsSource = _presenter.GetDepartments();
         }
 
         private void AddDepartment()
@@ -125,12 +113,6 @@ namespace FactoryDbViewer
             _presenter.DeleteDepartment(department);
         }
 
-
-        private void GetSpecialitiesTable()
-        {
-            DataGrid.ItemsSource = _presenter.GetSpecilities();
-        }
-
         private void AddSpeciality()
         {
             Speciality speciality = new Speciality();
@@ -172,33 +154,147 @@ namespace FactoryDbViewer
             _presenter.DeleteSpeciality(speciality);
         }
 
+        private void AddDetail()
+        {
+            Detail detail = new Detail();
+
+            var editDetailWindow = new EditDetailWindow(detail);
+
+            editDetailWindow.ShowDialog();
+
+            if (editDetailWindow.DialogResult == false)
+                return;
+
+            _presenter.AddDetail(detail);
+        }
+
+        private void EditDetail()
+        {
+            Detail detail = DataGrid.SelectedItem as Detail;
+
+            if (detail == null)
+                return;
+
+            var editDetailWindow = new EditDetailWindow(detail);
+
+            editDetailWindow.ShowDialog();
+
+            if (editDetailWindow.DialogResult == false)
+                return;
+
+            _presenter.EditDetail(detail);
+        }
+
+        private void DeleteDetail()
+        {
+            Detail detail = DataGrid.SelectedItem as Detail;
+
+            if (detail == null)
+                return;
+
+            _presenter.DeleteDetail(detail);
+        }
+
+        private void AddDailyAccount()
+        {
+            DailyAccount dailyAccount = new DailyAccount();
+
+            var editDailyAccountWindow = new EditDailyAccountWindow(dailyAccount);
+
+            editDailyAccountWindow.ShowDialog();
+
+            if (editDailyAccountWindow.DialogResult == false)
+                return;
+
+            _presenter.AddDailyAccount(dailyAccount);
+        }
+
+        private void EditDailyAccount()
+        {
+            DailyAccount dailyAccount = DataGrid.SelectedItem as DailyAccount;
+
+            if (dailyAccount == null)
+                return;
+
+            var editDailyAccountWindow = new EditDailyAccountWindow(dailyAccount);
+
+            editDailyAccountWindow.ShowDialog();
+
+            if (editDailyAccountWindow.DialogResult == false)
+                return;
+
+            _presenter.EditDailyAccount(dailyAccount);
+        }
+
+        private void DeleteDailyAccount()
+        {
+            DailyAccount dailyAccount = DataGrid.SelectedItem as DailyAccount;
+
+            if (dailyAccount == null)
+                return;
+
+            _presenter.DeleteDailyAccount(dailyAccount);
+        }
+
+        private void AddMonthAccount()
+        {
+            MonthAccount monthAccount = new MonthAccount();
+
+            var editMonthAccountWindow = new EditMonthAccountWindow(monthAccount);
+
+            editMonthAccountWindow.ShowDialog();
+
+            if (editMonthAccountWindow.DialogResult == false)
+                return;
+
+            _presenter.AddMonthAccount(monthAccount);
+        }
+
+        private void EditMonthAccount()
+        {
+            MonthAccount monthAccount = DataGrid.SelectedItem as MonthAccount;
+
+            if (monthAccount == null)
+                return;
+
+            var editMonthAccountWindow = new EditMonthAccountWindow(monthAccount);
+
+            editMonthAccountWindow.ShowDialog();
+
+            if (editMonthAccountWindow.DialogResult == false)
+                return;
+
+            _presenter.EditMonthAccount(monthAccount);
+        }
+
+        private void DeleteMonthAccount()
+        {
+            MonthAccount monthAccount = DataGrid.SelectedItem as MonthAccount;
+
+            if (monthAccount == null)
+                return;
+
+            _presenter.DeleteMonthAccount(monthAccount);
+        }
+
         private void TablesList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //try
-            //{
-            var tableType = (TableTypes) Enum.Parse(typeof (TableTypes), TablesListBox.SelectedItem.ToString());
-
-            DataGrid.ItemsSource = null;
-            _currentTableType = tableType;
-
-            switch (tableType)
+            try
             {
-                case TableTypes.Workers:
-                    GetWorkersTable();
-                    break;
-                case TableTypes.Departments:
-                    GetDepartmentsTable();
-                    break;
-                case TableTypes.Specialities:
-                    GetSpecialitiesTable();
-                    break;
+                var tableType = (TableTypes)Enum.Parse(typeof(TableTypes), TablesListBox.SelectedItem.ToString());
+
+                DataGrid.ItemsSource = null;
+                _presenter.CurrentTableType = tableType;
             }
-            //}
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         private void AddButton_OnClick(object sender, RoutedEventArgs e)
         {
-            switch (_currentTableType)
+            switch (_presenter.CurrentTableType)
             {
                 case TableTypes.Workers:
                     AddWorker();
@@ -209,15 +305,21 @@ namespace FactoryDbViewer
                 case TableTypes.Specialities:
                     AddSpeciality();
                     break;
-                default:
-                    
+                case TableTypes.Details:
+                AddDetail();
+                    break;
+                case TableTypes.DailyAccounts:
+                    AddDailyAccount();
+                    break;
+                case TableTypes.MonthAccounts:
+                    AddMonthAccount();
                     break;
             }
         }
 
         private void EditButton_OnClick(object sender, RoutedEventArgs e)
         {
-            switch (_currentTableType)
+            switch (_presenter.CurrentTableType)
             {
                 case TableTypes.Workers:
                     EditWorker();
@@ -228,15 +330,21 @@ namespace FactoryDbViewer
                 case TableTypes.Specialities:
                     EditSpeciality();
                     break;
-                default:
-
+                case TableTypes.Details:
+                    EditDetail();
+                    break;
+                case TableTypes.DailyAccounts:
+                    EditDailyAccount();
+                    break;
+                case TableTypes.MonthAccounts:
+                    EditMonthAccount();
                     break;
             }
         }
 
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
-            switch (_currentTableType)
+            switch (_presenter.CurrentTableType)
             {
                 case TableTypes.Workers:
                     DeleteWorker();
@@ -247,10 +355,21 @@ namespace FactoryDbViewer
                 case TableTypes.Specialities:
                     DeleteSpeciality();
                     break;
-                default:
-
+                case TableTypes.Details:
+                    DeleteDetail();
+                    break;
+                case TableTypes.DailyAccounts:
+                    DeleteDailyAccount();
+                    break;
+                case TableTypes.MonthAccounts:
+                    DeleteMonthAccount();
                     break;
             }
+        }
+
+        public void ShowMessage(string text)
+        {
+            MessageBox.Show(text, "FactoryDbViewer", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
 }
