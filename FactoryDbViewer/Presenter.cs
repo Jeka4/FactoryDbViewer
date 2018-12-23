@@ -26,10 +26,13 @@ namespace FactoryDbViewer
 
         private readonly IDataModel _dataModel;
 
+        private readonly IRequestHandler _requestHandler;
+
         public Presenter(DataModel dataModel)
         {
             _dataModel = dataModel;
             _window = new MainWindow(this);
+            _requestHandler = new RequestHandler(_dataModel);
 
             _window.Show();
         }
@@ -38,14 +41,7 @@ namespace FactoryDbViewer
         {
             try
             {
-                DepartmentsView department = _dataModel.GetDepartments().Single(d => d.Name == worker.Department);
-                WorkerSpecialitiesView speciality = _dataModel.GetSpecialities().Single(s => s.name == worker.Speciality);
-
-                WorkerInformationView workerInformation = TableMapper.WorkerPocoToView(worker);
-                workerInformation.Department = department;
-                workerInformation.Speciality = speciality;
-
-                _dataModel.InsertWorker(workerInformation);
+                _requestHandler.AddWorker(worker);
             }
             catch (DbEntityValidationException ex)
             {
@@ -65,18 +61,7 @@ namespace FactoryDbViewer
         {
             try
             {
-                DepartmentsView department = _dataModel.GetDepartments().Single(d => d.Name == worker.Department);
-                WorkerSpecialitiesView speciality = _dataModel.GetSpecialities()
-                    .Single(s => s.name == worker.Speciality);
-
-                WorkerInformationView workerInformation = TableMapper.WorkerPocoToView(worker);
-
-                workerInformation.Department = department;
-                workerInformation.Speciality = speciality;
-                workerInformation.DepartmentId = department.ID;
-                workerInformation.SpecialityId = speciality.id;
-
-                _dataModel.UpdateWorker(workerInformation);
+                _requestHandler.EditWorker(worker);
             }
             catch (DbEntityValidationException ex)
             {
@@ -96,9 +81,7 @@ namespace FactoryDbViewer
         {
             try
             {
-                WorkerInformationView workerInformation = TableMapper.WorkerPocoToView(worker);
-
-                _dataModel.DeleteWorker(workerInformation);
+                _requestHandler.DeleteWorker(worker);
             }
             catch (DbEntityValidationException ex)
             {

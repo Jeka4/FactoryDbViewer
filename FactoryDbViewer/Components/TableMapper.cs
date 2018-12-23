@@ -1,7 +1,7 @@
 ﻿using FactoryDataModel;
 using FactoryDbViewer.Tables;
 
-namespace FactoryDbViewer
+namespace FactoryDbViewer.Components
 {
     static internal class TableMapper
     {
