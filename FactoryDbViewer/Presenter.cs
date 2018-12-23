@@ -45,7 +45,6 @@ namespace FactoryDbViewer
                 workerInformation.Speciality = speciality;
 
                 _dataModel.InsertWorker(workerInformation);
-                UpdateViewTable();
             }
             catch (Exception)
             {
@@ -91,7 +90,6 @@ namespace FactoryDbViewer
                 WorkerInformationView workerInformation = TableMapper.WorkerPocoToView(worker);
 
                 _dataModel.DeleteWorker(workerInformation);
-                UpdateViewTable();
             }
             catch (Exception)
             {
@@ -110,7 +108,6 @@ namespace FactoryDbViewer
                 var dep = TableMapper.DepartmentPocoToView(department);
 
                 _dataModel.InsertDepartment(dep);
-                UpdateViewTable();
             }
             catch (Exception)
             {
@@ -129,7 +126,6 @@ namespace FactoryDbViewer
                 var dep = TableMapper.DepartmentPocoToView(department);
 
                 _dataModel.UpdateDepartment(dep);
-                UpdateViewTable();
             }
             catch (Exception)
             {
@@ -148,7 +144,6 @@ namespace FactoryDbViewer
                 var dep = TableMapper.DepartmentPocoToView(department);
 
                 _dataModel.DeleteDepartment(dep);
-                UpdateViewTable();
             }
             catch (Exception)
             {
@@ -167,7 +162,6 @@ namespace FactoryDbViewer
                 var spec = TableMapper.SpecialityPocoToView(speciality);
 
                 _dataModel.InsertSpeciality(spec);
-                UpdateViewTable();
             }
             catch (Exception)
             {
@@ -186,7 +180,6 @@ namespace FactoryDbViewer
                 var spec = TableMapper.SpecialityPocoToView(speciality);
 
                 _dataModel.UpdateSpeciality(spec);
-                UpdateViewTable();
             }
             catch (Exception)
             {
@@ -205,7 +198,6 @@ namespace FactoryDbViewer
                 var spec = TableMapper.SpecialityPocoToView(speciality);
 
                 _dataModel.DeleteSpeciality(spec);
-                UpdateViewTable();
             }
             catch (Exception)
             {
@@ -224,7 +216,6 @@ namespace FactoryDbViewer
                 var det = TableMapper.DetailPocoToView(detail);
 
                 _dataModel.InsertDetail(det);
-                UpdateViewTable();
             }
             catch (Exception)
             {
@@ -243,7 +234,6 @@ namespace FactoryDbViewer
                 var det = TableMapper.DetailPocoToView(detail);
 
                 _dataModel.UpdateDetail(det);
-                UpdateViewTable();
             }
             catch (Exception)
             {
@@ -262,7 +252,6 @@ namespace FactoryDbViewer
                 var det = TableMapper.DetailPocoToView(detail);
 
                 _dataModel.DeleteDetail(det);
-                UpdateViewTable();
             }
             catch (Exception)
             {
@@ -281,7 +270,6 @@ namespace FactoryDbViewer
                 var dailyAcc = TableMapper.DailyAccountPocoToView(dailyAccount);
 
                 _dataModel.InsertDailyAccount(dailyAcc);
-                UpdateViewTable();
             }
             catch (Exception)
             {
@@ -300,7 +288,6 @@ namespace FactoryDbViewer
                 var dailyAcc = TableMapper.DailyAccountPocoToView(dailyAccount);
 
                 _dataModel.UpdateDailyAccount(dailyAcc);
-                UpdateViewTable();
             }
             catch (Exception ex)
             {
@@ -319,7 +306,6 @@ namespace FactoryDbViewer
                 var dailyAcc = TableMapper.DailyAccountPocoToView(dailyAccount);
 
                 _dataModel.DeleteDailyAccount(dailyAcc);
-                UpdateViewTable();
             }
             catch (Exception)
             {
@@ -338,7 +324,6 @@ namespace FactoryDbViewer
                 var monthAcc = TableMapper.MonthAccountPocoToView(monthAccount);
 
                 _dataModel.InsertDetailsMonthPlan(monthAcc);
-                UpdateViewTable();
             }
             catch (Exception)
             {
@@ -357,7 +342,6 @@ namespace FactoryDbViewer
                 var monthAcc = TableMapper.MonthAccountPocoToView(monthAccount);
 
                 _dataModel.UpdateDetailsMonthPlan(monthAcc);
-                UpdateViewTable();
             }
             catch (Exception)
             {
@@ -376,7 +360,6 @@ namespace FactoryDbViewer
                 var monthAcc = TableMapper.MonthAccountPocoToView(monthAccount);
 
                 _dataModel.DeleteDetailsMonthPlan(monthAcc);
-                UpdateViewTable();
             }
             catch (Exception)
             {
