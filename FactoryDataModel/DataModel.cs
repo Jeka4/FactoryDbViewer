@@ -11,7 +11,7 @@ namespace FactoryDataModel
         public List<DetailsView> GetDetails()
         {
             using (var contex = new DbFactory())
-            {
+            { 
                 return contex.DetailsView.ToList();
             }
         }
