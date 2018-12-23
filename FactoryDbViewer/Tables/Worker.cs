@@ -1,4 +1,6 @@
-﻿namespace FactoryDbViewer.Tables
+﻿using System;
+
+namespace FactoryDbViewer.Tables
 {
     public class Worker
     {
@@ -12,7 +14,7 @@
         public int Category { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
-        public System.DateTime WorkStartDate { get; set; }
+        public DateTime WorkStartDate { get; set; }
         public int DepartmentId { get; set; }
         public int SpecialityId { get; set; }
     }

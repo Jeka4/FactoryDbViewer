@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Security.Cryptography.X509Certificates;
 using System.Windows;
 using System.Windows.Controls;
 using FactoryDbViewer.Components;

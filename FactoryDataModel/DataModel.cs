@@ -1,12 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Diagnostics;
 using System.Linq;
 
 namespace FactoryDataModel
 {
-    public class DataModel
+    public class DataModel : IDataModel
     {
         public List<DetailsView> GetDetails()
         {

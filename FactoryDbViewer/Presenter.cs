@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
-using System.Windows.Controls;
 using FactoryDataModel;
 using FactoryDbViewer.Components;
 using FactoryDbViewer.Tables;
@@ -26,7 +24,7 @@ namespace FactoryDbViewer
 
         private readonly IMainWindow _window;
 
-        private readonly DataModel _dataModel;
+        private readonly IDataModel _dataModel;
 
         public Presenter(DataModel dataModel)
         {
@@ -53,7 +51,7 @@ namespace FactoryDbViewer
             {
                 _window.ShowMessage(ValidationErrorsHandler(ex.EntityValidationErrors));
             }
-            catch(Exception ex)
+            catch
             {
                 _window.ShowMessage("Ошибка работы с базой данных.");
             }

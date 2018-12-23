@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace FactoryDataModel
 {
@@ -29,7 +30,7 @@ namespace FactoryDataModel
         public string address { get; set; }
         [Required]
         public string phone { get; set; }
-        public System.DateTime workStartDate { get; set; }
+        public DateTime workStartDate { get; set; }
         [Required, Range(0, int.MaxValue)]
         public int DepartmentId { get; set; }
         [Required, Range(0, int.MaxValue)]

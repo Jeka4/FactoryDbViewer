@@ -7,14 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
+
 namespace FactoryDataModel
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Core.Objects;
-    using System.Linq;
-    
     public partial class DbFactory : DbContext
     {
         public DbFactory()
@@ -34,7 +33,7 @@ namespace FactoryDataModel
         public virtual DbSet<DetailsView> DetailsView { get; set; }
         public virtual DbSet<MonthAccountView> MonthAccountView { get; set; }
     
-        public virtual int DeleteDailyAccount(Nullable<int> workerID, Nullable<int> detailID, Nullable<System.DateTime> date)
+        public virtual int DeleteDailyAccount(Nullable<int> workerID, Nullable<int> detailID, Nullable<DateTime> date)
         {
             var workerIDParameter = workerID.HasValue ?
                 new ObjectParameter("workerID", workerID) :
@@ -46,7 +45,7 @@ namespace FactoryDataModel
     
             var dateParameter = date.HasValue ?
                 new ObjectParameter("date", date) :
-                new ObjectParameter("date", typeof(System.DateTime));
+                new ObjectParameter("date", typeof(DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteDailyAccount", workerIDParameter, detailIDParameter, dateParameter);
         }
@@ -69,7 +68,7 @@ namespace FactoryDataModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteDetail", idParameter);
         }
     
-        public virtual int DeleteDetailsMonthPlan(Nullable<int> departmentID, Nullable<System.DateTime> date, Nullable<int> detailID)
+        public virtual int DeleteDetailsMonthPlan(Nullable<int> departmentID, Nullable<DateTime> date, Nullable<int> detailID)
         {
             var departmentIDParameter = departmentID.HasValue ?
                 new ObjectParameter("departmentID", departmentID) :
@@ -77,7 +76,7 @@ namespace FactoryDataModel
     
             var dateParameter = date.HasValue ?
                 new ObjectParameter("date", date) :
-                new ObjectParameter("date", typeof(System.DateTime));
+                new ObjectParameter("date", typeof(DateTime));
     
             var detailIDParameter = detailID.HasValue ?
                 new ObjectParameter("detailID", detailID) :
@@ -104,7 +103,7 @@ namespace FactoryDataModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteWorker", idParameter);
         }
     
-        public virtual ObjectResult<InsertDailyAccount_Result> InsertDailyAccount(Nullable<int> workerID, Nullable<int> detailID, Nullable<System.DateTime> date, Nullable<int> madeCount, Nullable<int> defectCount, Nullable<int> norm)
+        public virtual ObjectResult<InsertDailyAccount_Result> InsertDailyAccount(Nullable<int> workerID, Nullable<int> detailID, Nullable<DateTime> date, Nullable<int> madeCount, Nullable<int> defectCount, Nullable<int> norm)
         {
             var workerIDParameter = workerID.HasValue ?
                 new ObjectParameter("workerID", workerID) :
@@ -116,7 +115,7 @@ namespace FactoryDataModel
     
             var dateParameter = date.HasValue ?
                 new ObjectParameter("date", date) :
-                new ObjectParameter("date", typeof(System.DateTime));
+                new ObjectParameter("date", typeof(DateTime));
     
             var madeCountParameter = madeCount.HasValue ?
                 new ObjectParameter("madeCount", madeCount) :
@@ -159,7 +158,7 @@ namespace FactoryDataModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InsertDetail_Result>("InsertDetail", nameParameter, blankMassParameter, detailMassParameter);
         }
     
-        public virtual ObjectResult<InsertDetailsMonthPlan_Result> InsertDetailsMonthPlan(Nullable<int> departmentID, Nullable<System.DateTime> date, Nullable<int> detailID, Nullable<int> mustProduce)
+        public virtual ObjectResult<InsertDetailsMonthPlan_Result> InsertDetailsMonthPlan(Nullable<int> departmentID, Nullable<DateTime> date, Nullable<int> detailID, Nullable<int> mustProduce)
         {
             var departmentIDParameter = departmentID.HasValue ?
                 new ObjectParameter("departmentID", departmentID) :
@@ -167,7 +166,7 @@ namespace FactoryDataModel
     
             var dateParameter = date.HasValue ?
                 new ObjectParameter("date", date) :
-                new ObjectParameter("date", typeof(System.DateTime));
+                new ObjectParameter("date", typeof(DateTime));
     
             var detailIDParameter = detailID.HasValue ?
                 new ObjectParameter("detailID", detailID) :
@@ -189,7 +188,7 @@ namespace FactoryDataModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InsertSpeciality_Result>("InsertSpeciality", specialityParameter);
         }
     
-        public virtual ObjectResult<InsertWorker_Result> InsertWorker(string firstName, string middleName, string lastName, string tableNumber, Nullable<int> departmentID, Nullable<int> specialityId, Nullable<int> category, Nullable<System.DateTime> workStartDate, string address, string phone)
+        public virtual ObjectResult<InsertWorker_Result> InsertWorker(string firstName, string middleName, string lastName, string tableNumber, Nullable<int> departmentID, Nullable<int> specialityId, Nullable<int> category, Nullable<DateTime> workStartDate, string address, string phone)
         {
             var firstNameParameter = firstName != null ?
                 new ObjectParameter("firstName", firstName) :
@@ -221,7 +220,7 @@ namespace FactoryDataModel
     
             var workStartDateParameter = workStartDate.HasValue ?
                 new ObjectParameter("workStartDate", workStartDate) :
-                new ObjectParameter("workStartDate", typeof(System.DateTime));
+                new ObjectParameter("workStartDate", typeof(DateTime));
     
             var addressParameter = address != null ?
                 new ObjectParameter("address", address) :
@@ -234,7 +233,7 @@ namespace FactoryDataModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InsertWorker_Result>("InsertWorker", firstNameParameter, middleNameParameter, lastNameParameter, tableNumberParameter, departmentIDParameter, specialityIdParameter, categoryParameter, workStartDateParameter, addressParameter, phoneParameter);
         }
     
-        public virtual ObjectResult<UpdateDailyAccount_Result> UpdateDailyAccount(Nullable<int> workerID, Nullable<int> detailID, Nullable<System.DateTime> date, Nullable<int> madeCount, Nullable<int> defectCount, Nullable<int> norm)
+        public virtual ObjectResult<UpdateDailyAccount_Result> UpdateDailyAccount(Nullable<int> workerID, Nullable<int> detailID, Nullable<DateTime> date, Nullable<int> madeCount, Nullable<int> defectCount, Nullable<int> norm)
         {
             var workerIDParameter = workerID.HasValue ?
                 new ObjectParameter("workerID", workerID) :
@@ -246,7 +245,7 @@ namespace FactoryDataModel
     
             var dateParameter = date.HasValue ?
                 new ObjectParameter("date", date) :
-                new ObjectParameter("date", typeof(System.DateTime));
+                new ObjectParameter("date", typeof(DateTime));
     
             var madeCountParameter = madeCount.HasValue ?
                 new ObjectParameter("madeCount", madeCount) :
@@ -297,7 +296,7 @@ namespace FactoryDataModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UpdateDetail_Result>("UpdateDetail", idParameter, nameParameter, detailMassParameter, blankMassParameter);
         }
     
-        public virtual ObjectResult<UpdateDetailsMonthPlan_Result> UpdateDetailsMonthPlan(Nullable<int> departmentID, Nullable<System.DateTime> date, Nullable<int> detailID, Nullable<int> mustProduce)
+        public virtual ObjectResult<UpdateDetailsMonthPlan_Result> UpdateDetailsMonthPlan(Nullable<int> departmentID, Nullable<DateTime> date, Nullable<int> detailID, Nullable<int> mustProduce)
         {
             var departmentIDParameter = departmentID.HasValue ?
                 new ObjectParameter("departmentID", departmentID) :
@@ -305,7 +304,7 @@ namespace FactoryDataModel
     
             var dateParameter = date.HasValue ?
                 new ObjectParameter("date", date) :
-                new ObjectParameter("date", typeof(System.DateTime));
+                new ObjectParameter("date", typeof(DateTime));
     
             var detailIDParameter = detailID.HasValue ?
                 new ObjectParameter("detailID", detailID) :
@@ -331,7 +330,7 @@ namespace FactoryDataModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UpdateSpeciality_Result>("UpdateSpeciality", idParameter, nameParameter);
         }
     
-        public virtual ObjectResult<UpdateWorker_Result> UpdateWorker(Nullable<int> id, string firstName, string middleName, string lastName, string tableNumber, Nullable<int> departmentID, Nullable<int> specialityId, Nullable<int> category, Nullable<System.DateTime> workStartDate, string address, string phone)
+        public virtual ObjectResult<UpdateWorker_Result> UpdateWorker(Nullable<int> id, string firstName, string middleName, string lastName, string tableNumber, Nullable<int> departmentID, Nullable<int> specialityId, Nullable<int> category, Nullable<DateTime> workStartDate, string address, string phone)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
@@ -367,7 +366,7 @@ namespace FactoryDataModel
     
             var workStartDateParameter = workStartDate.HasValue ?
                 new ObjectParameter("workStartDate", workStartDate) :
-                new ObjectParameter("workStartDate", typeof(System.DateTime));
+                new ObjectParameter("workStartDate", typeof(DateTime));
     
             var addressParameter = address != null ?
                 new ObjectParameter("address", address) :

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace FactoryDataModel
 {
@@ -14,7 +15,7 @@ namespace FactoryDataModel
         [Required, Range(0, int.MaxValue)]
         public int detailID { get; set; }
         [Required]
-        public System.DateTime date { get; set; }
+        public DateTime date { get; set; }
         [Required, Range(0, int.MaxValue)]
         public int madeCount { get; set; }
         [Required, Range(0, int.MaxValue)]
