@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FactoryDataModel
 {
@@ -17,7 +13,7 @@ namespace FactoryDataModel
         [Required, Range(0, int.MaxValue)]
         public int detailID { get; set; }
         [Required]
-        public System.DateTime date { get; set; }
+        public DateTime date { get; set; }
         [Required, Range(0, int.MaxValue)]
         public int departmentID { get; set; }
         [Required, Range(0, int.MaxValue)]

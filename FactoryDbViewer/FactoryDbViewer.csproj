@@ -65,6 +65,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Components\GetTableEventArgs.cs" />
+    <Compile Include="Components\IRequestHandler.cs" />
+    <Compile Include="Components\RequestHandler.cs" />
     <Compile Include="Components\TableTypes.cs" />
     <Compile Include="EditDailyAccountWindow.xaml.cs">
       <DependentUpon>EditDailyAccountWindow.xaml</DependentUpon>
@@ -86,7 +88,7 @@
     </Compile>
     <Compile Include="IMainWindow.cs" />
     <Compile Include="IPresenter.cs" />
-    <Compile Include="TableMapper.cs" />
+    <Compile Include="Components\TableMapper.cs" />
     <Compile Include="Tables\DailyAccount.cs" />
     <Compile Include="Tables\Department.cs" />
     <Compile Include="Tables\Detail.cs" />

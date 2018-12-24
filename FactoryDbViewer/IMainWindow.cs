@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using FactoryDbViewer.Components;
+﻿using System.Collections;
 
 namespace FactoryDbViewer
 {

@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
+using System.Text;
 using FactoryDataModel;
 using FactoryDbViewer.Components;
 using FactoryDbViewer.Tables;
@@ -23,12 +24,15 @@ namespace FactoryDbViewer
 
         private readonly IMainWindow _window;
 
-        private readonly DataModel _dataModel;
+        private readonly IDataModel _dataModel;
+
+        private readonly IRequestHandler _requestHandler;
 
         public Presenter(DataModel dataModel)
         {
             _dataModel = dataModel;
             _window = new MainWindow(this);
+            _requestHandler = new RequestHandler(_dataModel);
 
             _window.Show();
         }
@@ -37,19 +41,15 @@ namespace FactoryDbViewer
         {
             try
             {
-                DepartmentsView department = _dataModel.GetDepartments().Single(d => d.Name == worker.Department);
-                WorkerSpecialitiesView speciality = _dataModel.GetSpecialities().Single(s => s.name == worker.Speciality);
-
-                WorkerInformationView workerInformation = TableMapper.WorkerPocoToView(worker);
-                workerInformation.Department = department;
-                workerInformation.Speciality = speciality;
-
-                _dataModel.InsertWorker(workerInformation);
-                UpdateViewTable();
+                _requestHandler.AddWorker(worker);
             }
-            catch (Exception)
+            catch (DbEntityValidationException ex)
             {
-                _window.ShowMessage("Ошибка при добавлении записи");
+                _window.ShowMessage(ValidationErrorsHandler(ex.EntityValidationErrors));
+            }
+            catch
+            {
+                _window.ShowMessage("Ошибка работы с базой данных.");
             }
             finally
             {
@@ -61,22 +61,15 @@ namespace FactoryDbViewer
         {
             try
             {
-                DepartmentsView department = _dataModel.GetDepartments().Single(d => d.Name == worker.Department);
-                WorkerSpecialitiesView speciality = _dataModel.GetSpecialities()
-                    .Single(s => s.name == worker.Speciality);
-
-                WorkerInformationView workerInformation = TableMapper.WorkerPocoToView(worker);
-
-                workerInformation.Department = department;
-                workerInformation.Speciality = speciality;
-                workerInformation.DepartmentId = department.ID;
-                workerInformation.SpecialityId = speciality.id;
-
-                _dataModel.UpdateWorker(workerInformation);
+                _requestHandler.EditWorker(worker);
             }
-            catch (Exception)
+            catch (DbEntityValidationException ex)
             {
-                _window.ShowMessage("Ошибка при редактировании записи");
+                _window.ShowMessage(ValidationErrorsHandler(ex.EntityValidationErrors));
+            }
+            catch
+            {
+                _window.ShowMessage("Ошибка работы с базой данных.");
             }
             finally
             {
@@ -88,14 +81,15 @@ namespace FactoryDbViewer
         {
             try
             {
-                WorkerInformationView workerInformation = TableMapper.WorkerPocoToView(worker);
-
-                _dataModel.DeleteWorker(workerInformation);
-                UpdateViewTable();
+                _requestHandler.DeleteWorker(worker);
             }
-            catch (Exception)
+            catch (DbEntityValidationException ex)
             {
-                _window.ShowMessage("Ошибка при удалении записи");
+                _window.ShowMessage(ValidationErrorsHandler(ex.EntityValidationErrors));
+            }
+            catch
+            {
+                _window.ShowMessage("Ошибка работы с базой данных.");
             }
             finally
             {
@@ -110,11 +104,14 @@ namespace FactoryDbViewer
                 var dep = TableMapper.DepartmentPocoToView(department);
 
                 _dataModel.InsertDepartment(dep);
-                UpdateViewTable();
             }
-            catch (Exception)
+            catch (DbEntityValidationException ex)
             {
-                _window.ShowMessage("Ошибка при добавлении записи");
+                _window.ShowMessage(ValidationErrorsHandler(ex.EntityValidationErrors));
+            }
+            catch
+            {
+                _window.ShowMessage("Ошибка работы с базой данных.");
             }
             finally
             {
@@ -129,11 +126,14 @@ namespace FactoryDbViewer
                 var dep = TableMapper.DepartmentPocoToView(department);
 
                 _dataModel.UpdateDepartment(dep);
-                UpdateViewTable();
             }
-            catch (Exception)
+            catch (DbEntityValidationException ex)
             {
-                _window.ShowMessage("Ошибка при редактировании записи");
+                _window.ShowMessage(ValidationErrorsHandler(ex.EntityValidationErrors));
+            }
+            catch
+            {
+                _window.ShowMessage("Ошибка работы с базой данных.");
             }
             finally
             {
@@ -148,11 +148,14 @@ namespace FactoryDbViewer
                 var dep = TableMapper.DepartmentPocoToView(department);
 
                 _dataModel.DeleteDepartment(dep);
-                UpdateViewTable();
             }
-            catch (Exception)
+            catch (DbEntityValidationException ex)
             {
-                _window.ShowMessage("Ошибка при удалении записи");
+                _window.ShowMessage(ValidationErrorsHandler(ex.EntityValidationErrors));
+            }
+            catch
+            {
+                _window.ShowMessage("Ошибка работы с базой данных.");
             }
             finally
             {
@@ -167,11 +170,14 @@ namespace FactoryDbViewer
                 var spec = TableMapper.SpecialityPocoToView(speciality);
 
                 _dataModel.InsertSpeciality(spec);
-                UpdateViewTable();
             }
-            catch (Exception)
+            catch (DbEntityValidationException ex)
             {
-                _window.ShowMessage("Ошибка при добавлении записи");
+                _window.ShowMessage(ValidationErrorsHandler(ex.EntityValidationErrors));
+            }
+            catch
+            {
+                _window.ShowMessage("Ошибка работы с базой данных.");
             }
             finally
             {
@@ -186,11 +192,14 @@ namespace FactoryDbViewer
                 var spec = TableMapper.SpecialityPocoToView(speciality);
 
                 _dataModel.UpdateSpeciality(spec);
-                UpdateViewTable();
             }
-            catch (Exception)
+            catch (DbEntityValidationException ex)
             {
-                _window.ShowMessage("Ошибка при редактировании записи");
+                _window.ShowMessage(ValidationErrorsHandler(ex.EntityValidationErrors));
+            }
+            catch
+            {
+                _window.ShowMessage("Ошибка работы с базой данных.");
             }
             finally
             {
@@ -205,11 +214,14 @@ namespace FactoryDbViewer
                 var spec = TableMapper.SpecialityPocoToView(speciality);
 
                 _dataModel.DeleteSpeciality(spec);
-                UpdateViewTable();
             }
-            catch (Exception)
+            catch (DbEntityValidationException ex)
             {
-                _window.ShowMessage("Ошибка при удалении записи");
+                _window.ShowMessage(ValidationErrorsHandler(ex.EntityValidationErrors));
+            }
+            catch
+            {
+                _window.ShowMessage("Ошибка работы с базой данных.");
             }
             finally
             {
@@ -224,11 +236,14 @@ namespace FactoryDbViewer
                 var det = TableMapper.DetailPocoToView(detail);
 
                 _dataModel.InsertDetail(det);
-                UpdateViewTable();
             }
-            catch (Exception)
+            catch (DbEntityValidationException ex)
             {
-                _window.ShowMessage("Ошибка при добавлении записи");
+                _window.ShowMessage(ValidationErrorsHandler(ex.EntityValidationErrors));
+            }
+            catch
+            {
+                _window.ShowMessage("Ошибка работы с базой данных.");
             }
             finally
             {
@@ -243,11 +258,14 @@ namespace FactoryDbViewer
                 var det = TableMapper.DetailPocoToView(detail);
 
                 _dataModel.UpdateDetail(det);
-                UpdateViewTable();
             }
-            catch (Exception)
+            catch (DbEntityValidationException ex)
             {
-                _window.ShowMessage("Ошибка при редактировании записи");
+                _window.ShowMessage(ValidationErrorsHandler(ex.EntityValidationErrors));
+            }
+            catch
+            {
+                _window.ShowMessage("Ошибка работы с базой данных.");
             }
             finally
             {
@@ -262,11 +280,14 @@ namespace FactoryDbViewer
                 var det = TableMapper.DetailPocoToView(detail);
 
                 _dataModel.DeleteDetail(det);
-                UpdateViewTable();
             }
-            catch (Exception)
+            catch (DbEntityValidationException ex)
             {
-                _window.ShowMessage("Ошибка при удалении записи");
+                _window.ShowMessage(ValidationErrorsHandler(ex.EntityValidationErrors));
+            }
+            catch
+            {
+                _window.ShowMessage("Ошибка работы с базой данных.");
             }
             finally
             {
@@ -281,11 +302,14 @@ namespace FactoryDbViewer
                 var dailyAcc = TableMapper.DailyAccountPocoToView(dailyAccount);
 
                 _dataModel.InsertDailyAccount(dailyAcc);
-                UpdateViewTable();
             }
-            catch (Exception)
+            catch (DbEntityValidationException ex)
             {
-                _window.ShowMessage("Ошибка при добавлении записи");
+                _window.ShowMessage(ValidationErrorsHandler(ex.EntityValidationErrors));
+            }
+            catch
+            {
+                _window.ShowMessage("Ошибка работы с базой данных.");
             }
             finally
             {
@@ -300,11 +324,14 @@ namespace FactoryDbViewer
                 var dailyAcc = TableMapper.DailyAccountPocoToView(dailyAccount);
 
                 _dataModel.UpdateDailyAccount(dailyAcc);
-                UpdateViewTable();
             }
-            catch (Exception ex)
+            catch (DbEntityValidationException ex)
             {
-                _window.ShowMessage("Ошибка при редактировании записи");
+                _window.ShowMessage(ValidationErrorsHandler(ex.EntityValidationErrors));
+            }
+            catch
+            {
+                _window.ShowMessage("Ошибка работы с базой данных.");
             }
             finally
             {
@@ -319,11 +346,14 @@ namespace FactoryDbViewer
                 var dailyAcc = TableMapper.DailyAccountPocoToView(dailyAccount);
 
                 _dataModel.DeleteDailyAccount(dailyAcc);
-                UpdateViewTable();
             }
-            catch (Exception)
+            catch (DbEntityValidationException ex)
             {
-                _window.ShowMessage("Ошибка при удалении записи");
+                _window.ShowMessage(ValidationErrorsHandler(ex.EntityValidationErrors));
+            }
+            catch
+            {
+                _window.ShowMessage("Ошибка работы с базой данных.");
             }
             finally
             {
@@ -338,11 +368,14 @@ namespace FactoryDbViewer
                 var monthAcc = TableMapper.MonthAccountPocoToView(monthAccount);
 
                 _dataModel.InsertDetailsMonthPlan(monthAcc);
-                UpdateViewTable();
             }
-            catch (Exception)
+            catch (DbEntityValidationException ex)
             {
-                _window.ShowMessage("Ошибка при добавлении записи");
+                _window.ShowMessage(ValidationErrorsHandler(ex.EntityValidationErrors));
+            }
+            catch
+            {
+                _window.ShowMessage("Ошибка работы с базой данных.");
             }
             finally
             {
@@ -357,11 +390,14 @@ namespace FactoryDbViewer
                 var monthAcc = TableMapper.MonthAccountPocoToView(monthAccount);
 
                 _dataModel.UpdateDetailsMonthPlan(monthAcc);
-                UpdateViewTable();
             }
-            catch (Exception)
+            catch (DbEntityValidationException ex)
             {
-                _window.ShowMessage("Ошибка при редактировании записи");
+                _window.ShowMessage(ValidationErrorsHandler(ex.EntityValidationErrors));
+            }
+            catch
+            {
+                _window.ShowMessage("Ошибка работы с базой данных.");
             }
             finally
             {
@@ -376,11 +412,14 @@ namespace FactoryDbViewer
                 var monthAcc = TableMapper.MonthAccountPocoToView(monthAccount);
 
                 _dataModel.DeleteDetailsMonthPlan(monthAcc);
-                UpdateViewTable();
             }
-            catch (Exception)
+            catch (DbEntityValidationException ex)
             {
-                _window.ShowMessage("Ошибка при удалении записи");
+                _window.ShowMessage(ValidationErrorsHandler(ex.EntityValidationErrors));
+            }
+            catch
+            {
+                _window.ShowMessage("Ошибка работы с базой данных.");
             }
             finally
             {
@@ -448,7 +487,21 @@ namespace FactoryDbViewer
             {
                 _window.ShowMessage("Ошибка при получении данных");
             }
-
         }
+
+        private string ValidationErrorsHandler(IEnumerable<DbEntityValidationResult> validationResults)
+        {
+            var sb = new StringBuilder();
+            foreach (var validationError in validationResults)
+            {
+                sb.Append($"Объект: {validationError.Entry.Entity}\n");
+                foreach (var error in validationError.ValidationErrors)
+                {
+                    sb.Append($"Ошибка: {error.ErrorMessage}\n");
+                }
+            }
+
+            return sb.ToString();
+        } 
     }
 }
